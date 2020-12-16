@@ -5,6 +5,6 @@
     + Null
     + Undefined
     + Number
-    + String
+    + String  (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)
     + Symbol (ECMAScript 6 에 추가됨)
 + 별도로 Object 도 있음
