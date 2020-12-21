@@ -18,7 +18,8 @@ function nightDayHandler(self){
     target.style.backgroundColor = bgcolor;
     target.style.color = color;
     self.value = txt;
-    document.querySelectorAll('a').filter(function(value) {value.style.color = acolor; });
+    document.querySelectorAll('a').forEach(function(item) { item.style.color = acolor; });
+
     /*
     var alist = document.querySelectorAll('a');
     var i = 0;
