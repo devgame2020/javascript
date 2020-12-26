@@ -15,3 +15,14 @@ function solution(s) {
 }
 ```
 
++ Math.ceil() : 올림함수 
+    + Math.ceil(s.length / 2) - 1
+        + abc ==> 1 
+        + abcd ==> 2
+    + s.length % 2 === 0 ? 2 : 1
+        + 짝수면 2 , 홀수면 1
+```
+function solution(s) {
+    return s.substr(Math.ceil(s.length / 2) - 1, s.length % 2 === 0 ? 2 : 1);
+}
+```
