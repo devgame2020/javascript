@@ -1,9 +1,9 @@
 # 프로그래머스 코딩 테스트
 
 
-+ 가운데 글자 가져오기
-+ https://programmers.co.kr/learn/courses/30/lessons/12903
-
+* 가운데 글자 가져오기 : <https://programmers.co.kr/learn/courses/30/lessons/12903>
+   
++ 내소스
 ```
 function solution(s) {
     var answer = '';
@@ -15,6 +15,7 @@ function solution(s) {
 }
 ```
 
++ 다른 사람소스
 + Math.ceil() : 올림함수 
     + Math.ceil(s.length / 2) - 1
         + abc ==> 1 
@@ -27,10 +28,13 @@ function solution(s) {
     return s.substr(Math.ceil(s.length / 2) - 1, s.length % 2 === 0 ? 2 : 1);
 }
 ```
-
+   
 ***
+   
+* 크레인 인형뽑기 게임 : <https://programmers.co.kr/learn/courses/30/lessons/64061>
+   
 
-
++ 내소스
 ```
 function solution(board, moves) {
     var answer = 0;
@@ -54,9 +58,7 @@ function solution(board, moves) {
 }
 ```
 
-+ 크레인 인형뽑기 게임
-+ https://programmers.co.kr/learn/courses/30/lessons/64061
-
++ 다른 사람 소스 
 ```
 const transpose = matrix =>
     matrix.reduce(
@@ -84,4 +86,20 @@ const solution = (board, moves) => {
 
     return result;
 };
+```
+
+   
+***
+   
+
+* 완주하지 못한 선수 : <https://programmers.co.kr/learn/courses/30/lessons/42576>
+   
++ 내소스
+
+```
+```
+
++ 다른사람소스 
+
+```
 ```
