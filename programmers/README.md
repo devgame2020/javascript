@@ -40,20 +40,23 @@ function solution(board, moves) {
     var answer = 0;
     var len = board.length;
     var arr = Array();
+    // moves의 모든 배열을 순환한다. 
     moves.forEach(function(item) {
+        item--;
         for(var i=0;i<len;i++) {
-            if(board[i][item-1] != 0) {
-                if(arr.length && arr[arr.length-1] == board[i][item-1]) {
+            if(board[i][item] != 0) {
+                if(arr.length && arr[arr.length-1] == board[i][item]) {
                     arr.pop();
                     answer += 2;
                 }
                 else 
-                    arr.push(board[i][item-1]);
-                board[i][item-1] = 0;
+                    arr.push(board[i][item]);
+                board[i][item] = 0;
                 break;
             }
         }
     });
+  
     return answer;
 }
 ```
