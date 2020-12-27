@@ -100,9 +100,44 @@ const solution = (board, moves) => {
 + 내소스
 
 ```
+function solution(participant, completion) {
+    var answer = '';
+    
+    var arr = participant.concat(completion);
+    arr.sort();
+    var cnt = 0;
+    var str = "";
+    arr.some(function(item) { 
+        answer = item;
+        if(str == item) cnt++;
+        else {
+            if(cnt%2 == 1) { answer = str;  return true; }
+            str = item;
+            cnt = 1;
+        }
+
+    });  
+    return answer;
+}
 ```
 
 + 다른사람소스 
 
 ```
+// 두배열을 정렬하여 각각의 요소를 비교하여 서로 다를경우 해당 값이 정답!
+function solution(participant, completion) {
+    /*
+    for(let i in participant) {
+        if(completion.includes(participant[i]) == false) return participant[i];
+        completion.splice(completion.indexOf(participant[i]), 1);
+    }
+    */
+
+    participant.sort();
+    completion.sort();
+
+    for(let i in participant) {
+        if(participant[i] !== completion[i]) return participant[i];
+    }
+}
 ```
