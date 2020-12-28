@@ -100,6 +100,7 @@ const solution = (board, moves) => {
 + 내소스
 
 ```
+// 두배열을 merge한후에 정렬하여, 해당 배열을 순회하면서 같은 값이 홀수인 항목이 정답!
 function solution(participant, completion) {
     var answer = '';
     
@@ -141,3 +142,226 @@ function solution(participant, completion) {
     }
 }
 ```
+
+* https://programmers.co.kr/learn/courses/30/lessons/68644
+
++ 두 개 뽑아서 더하기
+
+```
+// 내소스 
+function solution(numbers) {
+    var answer = [];
+    var arr = [];
+    for(let i=0;i<numbers.length-1;i++) 
+        for(let j=i+1;j<numbers.length;j++) 
+            arr[numbers[i]+numbers[j]] = 1;
+        
+    arr.forEach(function(item,idx) {
+        answer.push(idx);
+    });
+
+    return answer;
+}
+```
+
+
+```
+// 수정된 소스
+function solution(numbers) {
+    var answer = [];
+    var set = new Set();    
+    for(let i=0;i<numbers.length-1;i++) 
+        for(let j=i+1;j<numbers.length;j++) 
+            set.add(numbers[i]+numbers[j]);
+    answer = [...set].sort(function(a,b) { return a-b; });
+    return answer;
+}
+```
+
+
+```
+// 다름사람 풀이
+function solution(numbers) {
+    const temp = []
+
+    for (let i = 0; i < numbers.length; i++) {
+        for (let j = i + 1; j < numbers.length; j++) {
+            temp.push(numbers[i] + numbers[j])
+        }
+    }
+
+    const answer = [...new Set(temp)]
+
+    return answer.sort((a, b) => a - b)
+}
+
+```
+
+
+
+   
+***
+   
+
+* https://programmers.co.kr/learn/courses/30/lessons/42840
++ 모의고사
+
+```
+// 내소스
+function solution(answers) {
+    var answer = [];
+    var arr = [ [], [1,2,3,4,5], [2,1,2,3,2,4,2,5] , [3,3,1,1,2,2,4,4,5,5]]; 
+    var jumsu = [ 0,0,0,0 ];
+    answers.forEach(function(item,idx) {
+        for(let i=1;i<=3;i++) 
+            if(item == arr[i][idx%arr[i].length]) 
+                jumsu[i]++;            
+    });
+
+    var m = Math.max(Math.max(jumsu[1], jumsu[2]), jumsu[3]);
+    for(let i=1;i<=3;i++) if(m == jumsu[i]) answer.push(i);
+    answer = answer.sort(function(a,b) { return a-b; });    
+    
+    return answer;
+}
+```
+
+
+```
+// 수정된 소스
+function solution(answers) {
+    var answer = [];
+    var arr = [ [], [1,2,3,4,5], [2,1,2,3,2,4,2,5] , [3,3,1,1,2,2,4,4,5,5]]; 
+    var jumsu = [ 0,0,0,0 ];
+    answers.forEach(function(item,idx) {
+        for(let i=1;i<=3;i++) 
+            if(item == arr[i][idx%arr[i].length]) 
+                jumsu[i]++;            
+    });
+
+    var m = Math.max(jumsu[1], jumsu[2], jumsu[3]);
+    for(let i=1;i<=3;i++) if(m == jumsu[i]) answer.push(i);
+    
+    return answer;
+}
+```
+
+```
+// 다름사람 풀이
+function solution(answers) {
+    var answer = [];
+    var a1 = [1, 2, 3, 4, 5];
+    var a2 = [2, 1, 2, 3, 2, 4, 2, 5]
+    var a3 = [ 3, 3, 1, 1, 2, 2, 4, 4, 5, 5];
+
+    var a1c = answers.filter((a,i)=> a === a1[i%a1.length]).length;
+    var a2c = answers.filter((a,i)=> a === a2[i%a2.length]).length;
+    var a3c = answers.filter((a,i)=> a === a3[i%a3.length]).length;
+    var max = Math.max(a1c,a2c,a3c);
+
+    if (a1c === max) {answer.push(1)};
+    if (a2c === max) {answer.push(2)};
+    if (a3c === max) {answer.push(3)};
+
+
+    return answer;
+}
+```
+
+
+
+
+
+
+   
+***
+   
+
+* 체육복
++ https://programmers.co.kr/learn/courses/30/lessons/42862?language=javascript
+
+```
+function solution(n, lost, reserve) {
+    var answer = 0;
+	// 배열을 선언과 동시에 초기화하는 법. 
+    var arr = Array.from({length:n},() =>1);
+
+	/*
+	아래와 같이 하면 [ 0,1,2,3,4] 가 생성된다. v는 undefined임 
+    var arr = Array.from({length:5},(v,i) =>i);
+	*/
+	
+    reserve.forEach(function(item) { arr[item-1]++ });
+    lost.forEach(function(item) { arr[item-1]-- });
+    arr.forEach(function(item,idx) { 
+        if(item == 0) {
+            if(arr[idx-1]>1) answer++;
+            else if(arr[idx+1]>1) { answer++; arr[idx+1]--; }
+        }
+        else answer++;
+    });
+
+    return answer;
+}
+```
+
+```
+// 다름사람 풀이
+// 이해 안됨. solution(7, [2, 3, 4], [1, 2, 3, 6]); 일경우 통과못함
+function solution(n, lost, reserve) {      
+    return n - lost.filter(a => {
+        const b = reserve.find(r => Math.abs(r-a) <= 1)
+        if(!b) return true
+        reserve = reserve.filter(r => r !== b)
+    }).length
+}
+```
+
+
+
+
+
+
+
+   
+***
+   
+
+* K번째수
++ https://programmers.co.kr/learn/courses/30/lessons/42748?language=javascript
+
+
+```
+// 내소스
+function solution(array, commands) {
+    var answer = [];
+    commands.forEach(function(arr) {
+       answer.push(array.slice(arr[0]-1,arr[1]).sort(function(a,b) { return a-b; })[arr[2]-1]);
+    });
+    return answer;
+}
+```
+
+
+```
+// 내소스2
+// forEach를 이렇게도 사용가능함. 
+function solution(array, commands) {
+    var answer = [];
+    commands.forEach(arr => {
+       answer.push(array.slice(arr[0]-1,arr[1]).sort((a,b) => a-b)[arr[2]-1]);
+    });
+    return answer;
+}
+
+```
+
+
+
+
+
+   
+***
+   
+
+
