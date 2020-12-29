@@ -364,4 +364,126 @@ function solution(array, commands) {
 ***
    
 
+* 2016년
++ https://programmers.co.kr/learn/courses/30/lessons/12901?language=javascript
+
+
+```
+// 내소스
+function solution(a, b) {
+    var answer = '';
+    var week = ['SUN','MON','TUE','WED','THU','FRI','SAT'];
+    var month =  [31,29,31,30,31,30,31,31,30,31,30,31];
+    var tot = 5;
+    for(let i=0;i<a-1;i++) tot += month[i]; 
+    tot += b-1;
+    answer = week[tot%7];
+    return answer;
+}
+```
+
+
+```
+// 좀더 간략화된소스
+function solution(a, b) {
+    var week = ['SUN','MON','TUE','WED','THU','FRI','SAT'];
+    var month =  [0,31,29,31,30,31,30,31,31,30,31,30,31];
+    var tot = b+4;
+    for(let i=1;i<a;i++) tot += month[i]; 
+    return week[tot%7];
+}
+```
+
+```
+// 내장객체인 Date를 사용한다. 
+// getDay()는 요일(0~6)을 리턴하는 함수
+function solution(a, b) {
+    var week = ['SUN','MON','TUE','WED','THU','FRI','SAT'];
+    return week[(new Date('2016-'+a+'-'+b)).getDay()];
+}
+```
+
+```
+// 날짜를 String으로 변환하면, 앞의 3글자가 요일임. 
+// 해당 요일을 대문자로 변환하여 리턴한다.
+function solution(a, b) {
+    return (new Date(2016,a-1,b)).toString().slice(0,3).toUpperCase();
+}
+```
+
+
+
+
+   
+***
+   
+
+* 3진법 뒤집기
++ https://programmers.co.kr/learn/courses/30/lessons/68935?language=javascript
+
+```
+function solution(n) {
+    return parseInt(n.toString(3).split('').reverse().join(''),3);
+}
+```
+
+```
+function solution(n) {
+    return parseInt([...n.toString(3)].reverse().join(''),3);
+}
+```
+
++ n.toString(3); // 3진수로 변환, n=45라면 1200
++ [...n.toString(3)] // 문자열을 모두 분리하여 배열로 변환 ["1", "2", "0", "0"]
++ [...n.toString(3)].reverse() // 배열을 반전시킨다. ["0", "0", "2", "1"]
++ [...n.toString(3)].reverse().join('') // 배열을 1개의 문자열로 합친다. "0021"
++ parseInt([...n.toString(3)].reverse().join(''),3) // 문자열을 3진수숫자로 취급하여, 10진수숫자로 변환한다.
+
+
+
+
+
+   
+***
+   
+
+* 같은 숫자는 싫어
++ https://programmers.co.kr/learn/courses/30/lessons/12906?language=javascript
+
+```
+function solution(arr)
+{
+    var answer = [];   
+    arr.forEach((d,i) => { if(arr[i+1] != d) answer.push(d) });   
+    return answer;
+}
+```
+
+
+```
+// 다른 사람의 풀이
+// filter를 사용하여 두 값이 다를때 true를 리턴하게 한다. 
+function solution(arr)
+{
+    return arr.filter((val,index) => val != arr[index+1]);
+}
+```
+
+
+
+   
+***
+   
+
+* 나누어 떨어지는 숫자 배열
++ https://programmers.co.kr/learn/courses/30/lessons/12910?language=javascript
+
+```
+function solution(arr, divisor) {
+    var answer = [];
+    answer = arr.filter( (d) => { return (d%divisor == 0); }).sort( (a,b) => { return a-b;}  );
+    if(answer.length==0) answer.push(-1);
+    return answer;
+}
+```
 
