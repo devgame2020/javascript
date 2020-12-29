@@ -541,3 +541,104 @@ function solution(strings, n) {
 }
 ```
 
+
+* 문자열 내 p와 y의 개수
++ https://programmers.co.kr/learn/courses/30/lessons/12916
+
+```
+// 내소스
+// 모두 대문자로 변환하고, 정규식을 사용하여 처리했다.
+function solution(s){
+    var answer = true;
+    s = s.toUpperCase();
+    var p = s.match(/P/g);   
+    var y = s.match(/Y/g);
+    if((p?p.length:0) != (y?y.length:0))  
+        answer = false;
+    return answer;
+}
+```
+
+
+```
+// 개선된소스
+function solution(s){
+    var p = s.match(/P/ig);   
+    var y = s.match(/Y/ig);
+    return ((p?p.length:0) == (y?y.length:0));
+}
+```
+
+
+```
+// 다른 사람 소스
+// 왜 이게 정답인지 이해안감.
+return s.toUpperCase().split("P").length === s.toUpperCase().split("Y").length;
+
+// 정규식 ig => g:글로벌,전역매칭  i:대소문자 구분안함
+// 문제가 있음. 해당 문자가 없을경우 NULL을 리턴하는데 length사용시 런타임 오류발생
+return s.match(/p/ig).length == s.match(/y/ig).length;
+```
+
+
+* https://programmers.co.kr/learn/courses/30/lessons/12917
++ 문자열 내림차순으로 배치하기
+
+```
+// 내소스
+function solution(s) {
+    var answer = '';   
+    answer = [...s].sort().reverse().join('');
+    return answer;
+}
+```
+
+```
+// sort할때 역순으로 정렬함
+function solution(s) {
+    var answer = '';
+    
+    var a = [...s].sort(function(a,b) { 
+        if(a>b) return -1;
+        if(b>a) return 1;
+        return 0;
+        
+        /* debug용 코드
+        console.log(a+":"+b );
+        if (a > b) { console.log(a + " 가 더 크다"); return -1; }
+        if (b > a) { console.log(b + " 가 더 크다"); return 1; }
+        console.log("0");
+        return 0;        
+        */
+    } );
+    answer = a.join('');
+    
+//    answer = [...s].sort().reverse().join('');
+    return answer;
+}
+```
+
+
+```
+// 다른 사람의 소스
+function solution(s) {
+    return s.split('').sort((a, b) => {
+        if (a > b) return -1;
+        if (b > a) return 1;
+        return 0;
+    }).join('');
+}
+```
+
+
+
+
+   
+***
+***
+   
+
+
+
+*
++ 
