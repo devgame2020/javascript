@@ -4,7 +4,7 @@
 * 가운데 글자 가져오기 : <https://programmers.co.kr/learn/courses/30/lessons/12903>
    
 + 내소스
-```
+```javascript
 function solution(s) {
     var answer = '';
     var r = parseInt(s.length)%2;
@@ -23,7 +23,7 @@ function solution(s) {
         + abcde ==> 2
     + s.length % 2 === 0 ? 2 : 1
         + 짝수면 2 , 홀수면 1
-```
+```javascript
 function solution(s) {
     return s.substr(Math.ceil(s.length / 2) - 1, s.length % 2 === 0 ? 2 : 1);
 }
@@ -35,7 +35,7 @@ function solution(s) {
    
 
 + 내소스
-```
+```javascript
 function solution(board, moves) {
     var answer = 0;
     var len = board.length;
@@ -62,7 +62,7 @@ function solution(board, moves) {
 ```
 
 + 다른 사람 소스 
-```
+```javascript
 const transpose = matrix =>
     matrix.reduce(
         (result, row) => row.map((_, i) => [...(result[i] || []), row[i]]),
@@ -99,7 +99,7 @@ const solution = (board, moves) => {
    
 + 내소스
 
-```
+```javascript
 // 두배열을 merge한후에 정렬하여, 해당 배열을 순회하면서 같은 값이 홀수인 항목이 정답!
 function solution(participant, completion) {
     var answer = '';
@@ -124,7 +124,7 @@ function solution(participant, completion) {
 
 + 다른사람소스 
 
-```
+```javascript
 // 두배열을 정렬하여 각각의 요소를 비교하여 서로 다를경우 해당 값이 정답!
 function solution(participant, completion) {
     /*
@@ -147,7 +147,7 @@ function solution(participant, completion) {
 
 + 두 개 뽑아서 더하기
 
-```
+```javascript
 // 내소스 
 function solution(numbers) {
     var answer = [];
@@ -165,7 +165,7 @@ function solution(numbers) {
 ```
 
 
-```
+```javascript
 // 수정된 소스
 function solution(numbers) {
     var answer = [];
@@ -179,7 +179,7 @@ function solution(numbers) {
 ```
 
 
-```
+```javascript
 // 다름사람 풀이
 function solution(numbers) {
     const temp = []
@@ -207,7 +207,7 @@ function solution(numbers) {
 * https://programmers.co.kr/learn/courses/30/lessons/42840
 + 모의고사
 
-```
+```javascript
 // 내소스
 function solution(answers) {
     var answer = [];
@@ -228,7 +228,7 @@ function solution(answers) {
 ```
 
 
-```
+```javascript
 // 수정된 소스
 function solution(answers) {
     var answer = [];
@@ -247,7 +247,7 @@ function solution(answers) {
 }
 ```
 
-```
+```javascript
 // 다름사람 풀이
 function solution(answers) {
     var answer = [];
@@ -281,7 +281,7 @@ function solution(answers) {
 * 체육복
 + https://programmers.co.kr/learn/courses/30/lessons/42862?language=javascript
 
-```
+```javascript
 function solution(n, lost, reserve) {
     var answer = 0;
 	// 배열을 선언과 동시에 초기화하는 법. 
@@ -306,7 +306,7 @@ function solution(n, lost, reserve) {
 }
 ```
 
-```
+```javascript
 // 다름사람 풀이
 // 이해 안됨. solution(7, [2, 3, 4], [1, 2, 3, 6]); 일경우 통과못함
 function solution(n, lost, reserve) {      
@@ -332,7 +332,7 @@ function solution(n, lost, reserve) {
 + https://programmers.co.kr/learn/courses/30/lessons/42748?language=javascript
 
 
-```
+```javascript
 // 내소스
 function solution(array, commands) {
     var answer = [];
@@ -344,7 +344,7 @@ function solution(array, commands) {
 ```
 
 
-```
+```javascript
 // 내소스2
 // forEach를 이렇게도 사용가능함. 
 function solution(array, commands) {
@@ -368,7 +368,7 @@ function solution(array, commands) {
 + https://programmers.co.kr/learn/courses/30/lessons/12901?language=javascript
 
 
-```
+```javascript
 // 내소스
 function solution(a, b) {
     var answer = '';
@@ -383,7 +383,7 @@ function solution(a, b) {
 ```
 
 
-```
+```javascript
 // 좀더 간략화된소스
 function solution(a, b) {
     var week = ['SUN','MON','TUE','WED','THU','FRI','SAT'];
@@ -394,7 +394,7 @@ function solution(a, b) {
 }
 ```
 
-```
+```javascript
 // 내장객체인 Date를 사용한다. 
 // getDay()는 요일(0~6)을 리턴하는 함수
 function solution(a, b) {
@@ -403,7 +403,7 @@ function solution(a, b) {
 }
 ```
 
-```
+```javascript
 // 날짜를 String으로 변환하면, 앞의 3글자가 요일임. 
 // 해당 요일을 대문자로 변환하여 리턴한다.
 function solution(a, b) {
@@ -421,13 +421,13 @@ function solution(a, b) {
 * 3진법 뒤집기
 + https://programmers.co.kr/learn/courses/30/lessons/68935?language=javascript
 
-```
+```javascript
 function solution(n) {
     return parseInt(n.toString(3).split('').reverse().join(''),3);
 }
 ```
 
-```
+```javascript
 function solution(n) {
     return parseInt([...n.toString(3)].reverse().join(''),3);
 }
@@ -450,7 +450,7 @@ function solution(n) {
 * 같은 숫자는 싫어
 + https://programmers.co.kr/learn/courses/30/lessons/12906?language=javascript
 
-```
+```javascript
 function solution(arr)
 {
     var answer = [];   
@@ -460,7 +460,7 @@ function solution(arr)
 ```
 
 
-```
+```javascript
 // 다른 사람의 풀이
 // filter를 사용하여 두 값이 다를때 true를 리턴하게 한다. 
 function solution(arr)
@@ -478,7 +478,7 @@ function solution(arr)
 * 나누어 떨어지는 숫자 배열
 + https://programmers.co.kr/learn/courses/30/lessons/12910?language=javascript
 
-```
+```javascript
 function solution(arr, divisor) {
     var answer = [];
     answer = arr.filter( (d) => { return (d%divisor == 0); }).sort( (a,b) => { return a-b;}  );
@@ -496,7 +496,7 @@ function solution(arr, divisor) {
 * 두 정수 사이의 합
 + https://programmers.co.kr/learn/courses/30/lessons/12912?language=javascript
 
-```
+```javascript
 // 내소스
 function solution(a, b) {
     var answer = 0;    
@@ -506,7 +506,7 @@ function solution(a, b) {
 ```
 
 
-```
+```javascript
 // 다른사람 소스
 function solution(a, b) {
     return (a+b)*(Math.abs(b-a)+1)/2;
@@ -518,7 +518,7 @@ function solution(a, b) {
 * 문자열 내 마음대로 정렬하기
 + https://programmers.co.kr/learn/courses/30/lessons/12915?language=javascript#
 
-```
+```javascript
 // 내소스
 function solution(strings, n) {
     var answer = [];
@@ -531,7 +531,7 @@ function solution(strings, n) {
 ```
 
 
-```
+```javascript
 // 다른사람소스
 // localCompare()를 사용하여 더 간결하게 표현함
 function solution(strings, n) {
@@ -545,7 +545,7 @@ function solution(strings, n) {
 * 문자열 내 p와 y의 개수
 + https://programmers.co.kr/learn/courses/30/lessons/12916
 
-```
+```javascript
 // 내소스
 // 모두 대문자로 변환하고, 정규식을 사용하여 처리했다.
 function solution(s){
@@ -560,7 +560,7 @@ function solution(s){
 ```
 
 
-```
+```javascript
 // 개선된소스
 function solution(s){
     var p = s.match(/P/ig);   
@@ -570,7 +570,7 @@ function solution(s){
 ```
 
 
-```
+```javascript
 // 다른 사람 소스
 // 왜 이게 정답인지 이해안감.
 return s.toUpperCase().split("P").length === s.toUpperCase().split("Y").length;
@@ -584,7 +584,7 @@ return s.match(/p/ig).length == s.match(/y/ig).length;
 * https://programmers.co.kr/learn/courses/30/lessons/12917
 + 문자열 내림차순으로 배치하기
 
-```
+```javascript
 // 내소스
 function solution(s) {
     var answer = '';   
@@ -593,7 +593,7 @@ function solution(s) {
 }
 ```
 
-```
+```javascript
 // sort할때 역순으로 정렬함
 function solution(s) {
     var answer = '';
@@ -619,7 +619,7 @@ function solution(s) {
 ```
 
 
-```
+```javascript
 // 다른 사람의 소스
 function solution(s) {
     return s.split('').sort((a, b) => {
