@@ -201,6 +201,7 @@ function solution(numbers) {
 
    
 ***
+***
    
 
 * https://programmers.co.kr/learn/courses/30/lessons/42840
@@ -358,9 +359,8 @@ function solution(array, commands) {
 
 
 
-
-
    
+***
 ***
    
 
@@ -487,3 +487,28 @@ function solution(arr, divisor) {
 }
 ```
 
+
+   
+***
+***
+   
+
+* 두 정수 사이의 합
++ https://programmers.co.kr/learn/courses/30/lessons/12912?language=javascript
+
+```
+// 내소스
+function solution(a, b) {
+    var answer = 0;    
+    for(var i=(a<b?a:b);i<=(b>a?b:a);i++) answer += i;
+    return answer;
+}
+```
+
+
+```
+// 다른사람 소스
+function solution(a, b) {
+    return (a+b)*(Math.abs(b-a)+1)/2;
+}
+```
