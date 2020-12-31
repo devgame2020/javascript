@@ -1467,9 +1467,42 @@ function solution(dartResult) {
 }
 ```
 
+```javascript
+// 더 개선된 소스
+function solution(dartResult) {    
+    var answer = 0;
+    var idx = 0;
+    var arr = [];
+    const bonus = [ 0, 'S', 'D', 'T'];
+        
+    var data="";
+    for(var i=0;i<dartResult.length;) {        
+        var d = [ ...dartResult.substring(i,i+4)];             
+        
+        var nsize=1;
+        if(d[1] == '0') nsize=2;
+        
+        var opt = 1;
+        if(d[nsize+1] == '*') opt = 2;
+        else if(d[nsize+1] == '#') opt = -1;
+        
+        if(opt!=1) i+=nsize+2;
+        else i+=nsize+1;    
+        
+        arr.push( [parseInt(d.join('').substring(0,nsize)),bonus.indexOf(d[nsize]),opt] );
+    }
+    
+    var jumsu = [];
+    arr.forEach( function(d,i) {
+        jumsu[i] = Math.pow(parseInt(d[0]),d[1])*d[2];        
+        if(d[2] == 2 && i>0) jumsu[i-1] = jumsu[i-1]*d[2];
 
-
-
+    });
+    jumsu.forEach( (d) => answer+=d );
+    
+    return answer;
+}
+```
 
    
 ***
