@@ -640,5 +640,125 @@ function solution(s) {
 
 
 
-*
-+ 
+* 문자열 다루기 기본
++ https://programmers.co.kr/learn/courses/30/lessons/12918?language=javascript
+
+
+
+```javascript
+// 내소스 : 일부는 실패가 나옴 
+// 0.01 , 1e22같은 경우일때 이건 숫자만 구성된것인가, 아니면 문자인것인가?
+// 문제의 정의가 명확하지 않음
+function solution(s) {
+    return (!isNaN(s) && (s.length==4 || s.length==6));
+}
+```
+
+
+
+```javascript
+// forEach를 사용하여 0~9인값이 있을경우에만 숫자로 인정함. 
+function solution(s) {
+    var is = true;
+    [...s].forEach( function(d) { if(d<"0" || d>"9") is=false; });
+    return (is && (s.length==4 || s.length==6));
+}
+```
+
+
+
+
+
+
+* 문자열 내림차순으로 배치하기
++ https://programmers.co.kr/learn/courses/30/lessons/12917?language=javascript
+
+```javascript
+// 내풀이
+// 문자열 s를 [...s] 를 사용하여 배열로 만들고, sort()로 정렬, reverse()로 역순으로 뒤집고, join()으로 다시 문자열을 만들어 리턴한다.
+function solution(s) {
+    return [...s].sort().reverse().join('');
+}
+```
+
+```javascript
+// 정렬할때 아예 역순으로 정렬한다.
+function solution(s) {
+    var answer = '';
+    
+    var a = [...s].sort(function(a,b) { 
+        if(a>b) return -1;
+        if(b>a) return 1;
+        return 0;
+        
+        /*
+        console.log(a+":"+b );
+        if (a > b) { console.log(a + " 가 더 크다"); return -1; }
+        if (b > a) { console.log(b + " 가 더 크다"); return 1; }
+        console.log("0");
+        return 0;        
+        */
+    } );
+    answer = a.join('');
+    
+//    answer = [...s].sort().reverse().join('');
+    return answer;
+}
+```
+
+
+* 소수 찾기
++ https://programmers.co.kr/learn/courses/30/lessons/12921?language=javascript
+
+```javascript
+// 내소스
+// 에라토스테네스의체를 이용하였다.
+function solution(n) {
+    var answer = 0;
+    var arr = [];
+    for(var i=2;i<=n;i++) {
+        if(arr[i] == null) {                   
+            arr[i] = 1;
+            for(var j=i*2;j<=n;j+=i) arr[j] = 0; 
+        }
+    }
+    arr.forEach(function(d,i) { if(d) answer++; });
+    return answer;
+}
+```
+
+* 수박수박수박수박수박수?
++ https://programmers.co.kr/learn/courses/30/lessons/12922?language=javascript
+
+```javascript
+// 내소스
+function solution(n) {
+    var answer = '';
+    for(var i=0;i<n;i++) answer += (i%2?"박":"수");
+    return answer;
+}
+```
+
+
+
+   
+***
+***
+   
+
+
+
+* 문자열을 정수로 바꾸기
++ https://programmers.co.kr/learn/courses/30/lessons/12925?language=javascript
+
+```javascript
+// 내소스
+function solution(s) {
+    var answer = 0;
+    answer = parseInt(s);
+    return answer;
+}
+```
+
+
+
