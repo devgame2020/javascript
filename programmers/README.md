@@ -1046,6 +1046,13 @@ function solution(numbers, hand) {
 }
 ```
 
+
+   
+***
+***
+   
+
+
 * 최대공약수와 최소공배수
 + https://programmers.co.kr/learn/courses/30/lessons/12940?language=javascript
 
@@ -1129,11 +1136,71 @@ function solution(arr) {
 
 ```javascript
 // 내소스
-
-
+function solution(x) {
+    return x % [...x.toString()].reduce( (p,d,i) => parseInt(p)+parseInt(d) ) == 0
+}
 ```
 
 
+   
+***
+***
+   
+
+
+
+* 핸드폰 번호 가리기
++ https://programmers.co.kr/learn/courses/30/lessons/12948?language=javascript
+
+
+```javascript
+// 내소스
+function solution(phone_number) {
+    var answer = '';
+    answer = "*".repeat(phone_number.length-4) +  phone_number.substring(phone_number.length-4);
+    return answer;
+}
+```
+
+```javascript
+// 다른사람 소스
+// 정규식으로 풀었다.
+function solution(phone_number) {
+    return phone_number.replace(/\d(?=\d{4})/g, "*");
+}
+```
+
+
+
+
+
+
+* 행렬의 덧셈
++ https://programmers.co.kr/learn/courses/30/lessons/12950?language=javascript
+
+
+```javascript
+// 내소스
+function solution(arr1, arr2) {
+    var answer = [];
+    arr1.forEach( function(d,i) {
+        var tmp = arr2[i];
+        var ans = [];
+        for(var i=0;i<tmp.length;i++)
+            ans.push(d[i] + tmp[i]);
+        answer.push(ans);
+    });
+    
+    return answer;
+}
+```
+
+```javascript
+// 다른사람 소스
+function solution(arr1, arr2) {
+    return arr1.map((a,i) => a.map((b, j) => b + arr2[i][j]));
+}    
+```
 
 
 
