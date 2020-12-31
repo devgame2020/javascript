@@ -3,10 +3,26 @@
 
 
 
-```
+```javascript
 // forEach사용하는법 
 var arr = [ 'ab','de','fg','yy' ,'zz'];
 arr.forEach((data,idx) => { console.log(idx +":" + data)} );
+arr.forEach( function(data,idx) { console.log(idx +":" + data)} );
+arr.forEach( (d,i) => console.log(i + ":" + d) );
+
+
+// reduce
+var arr = [ 1,2,3,4,5 ];
+// a : 이전 리턴값
+// b : data
+// c : index 
+var sum = arr.reduce(function(a,b,c) { 
+    console.log(a,b,c);
+    return a+b;
+});
+
+// 배열의 모든 원소를 붙여서 1개의 String으로 변환
+console.log(arr.join(''));
 
 // array선언와 동시에 초기화
 var arr = Array.from({length:5}, (data,idx)=>idx);
@@ -22,3 +38,6 @@ console.log(set);
 var arr2 = [...set].sort((a,b)=>{return a-b;});
 console.log(arr2);
 ```
+
+
+

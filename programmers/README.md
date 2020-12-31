@@ -762,3 +762,383 @@ function solution(s) {
 
 
 
+* 내적
++ https://programmers.co.kr/learn/courses/30/lessons/70128?language=javascript
+
+```javascript
+function solution(a, b) {
+    var answer = 0;
+    a.forEach( (d,i) => answer += (d * b[i]));
+    return answer;
+}
+```
+
+* 시저 암호
++ https://programmers.co.kr/learn/courses/30/lessons/12926?language=javascript
+
+```javascript
+// 내소스
+function solution(s, n) {
+    var answer = '';
+    // 65~90 : A~Z
+    // 97~122 : a~z
+    // 32 : space
+
+	var base = 65;    
+    var arr = [];
+    for(var i=0;i<s.length;i++) {
+        var x = s.charCodeAt(i);
+        // Space는 변환안함
+    	if(x == 32) {
+    		arr.push(' '); 
+    		continue;
+    	}
+    	base = x<=90?65:97;
+   		arr.push(String.fromCharCode(base + ((s.charCodeAt(i)+n-base) % 26)));	
+    }
+    answer = arr.join('');
+    return answer;
+}
+```
+
+* 약수의 합
++ https://programmers.co.kr/learn/courses/30/lessons/12928?language=javascript
+
+```javascript
+// 내소스
+function solution(n) {
+    var answer = n<2?n:1+n;
+    for(var i=2;i<=parseInt(n/2);i++) {
+        answer+=(n%i==0?i:0);
+    }
+    return answer;
+}
+```
+
+
+   
+***
+***
+   
+
+
+
+* 이상한 문자 만들기
++ https://programmers.co.kr/learn/courses/30/lessons/12930?language=javascript
+
+```javascript
+// 내소스
+function solution(s) {
+    var answer = '';
+    var ret = s.split(" ");
+    ret.forEach( function(d,i) { 
+    	var str = "";
+    	[...d].forEach( function(d2,i2) {
+    		if(i2%2==0) 
+	    		str += d2.toUpperCase();
+    		else 
+    			str += d2.toLowerCase();
+    	});
+    	ret[i] = str;
+    });
+    answer = ret.join(' ');
+    return answer;
+}
+```
+
+```javascript
+// 내소스 : 속도가 이게 더 빠를것같음.
+function solution(s) {
+    var answer = '';
+    var idx = 0;
+    for(var i=0;i<s.length;i++) {
+    	s[i] == ' '?idx = 0:idx++;
+    	if(idx%2 == 1) 
+    		answer += s[i].toUpperCase();
+    	else
+    		answer += s[i].toLowerCase();
+    }
+    return answer;
+}
+```
+
+
+* 자릿수 더하기
++ https://programmers.co.kr/learn/courses/30/lessons/12931?language=javascript
+
+```javascript
+// 내소스
+function solution(n)
+{
+    var answer = 0;  
+    // n을 문자열로 변경해서,
+    // 배열로 만든후
+    // forEach로 각각의 값들을 모두 정수로 변환하여 더한다.
+    [...(""+n)].forEach((d)=> answer += parseInt(d)); 
+    return answer;
+}
+```
+
+
+* 자연수 뒤집어 배열로 만들기
++ https://programmers.co.kr/learn/courses/30/lessons/12932?language=javascript
+
+```javascript
+// 내소스
+function solution(n) {
+    var answer = [];
+    // n을 문자열로 변경후
+    // 배열로 만들어서, 반전을 시킨후
+    // forEach로 한개씩 숫자로 변환하여 answer에 push한다.
+    [...(""+n)].reverse().forEach( (d) => answer.push(parseInt(d)));
+    return answer;
+}
+```
+
+
+* 정수 내림차순으로 배치하기
++ https://programmers.co.kr/learn/courses/30/lessons/12933?language=javascript
+
+```javascript
+// 내소스
+function solution(n) {
+    var answer = 0;
+    answer = parseInt([...n.toString()].sort().reverse().join(''));
+    return answer;
+}
+```
+
+
+
+   
+***
+***
+   
+
+* 정수 제곱근 판별
++ https://programmers.co.kr/learn/courses/30/lessons/12934?language=javascript
+
+```javascript
+// 내소스
+function solution(n) {
+    var answer = -1;
+    var sqrt = parseInt(Math.sqrt(n));
+    if(sqrt*sqrt == n) answer = (sqrt+1)*(sqrt+1);
+    return answer;
+}
+```
+
+***
+***
+   
+
+* 제일 작은 수 제거하기
++ https://programmers.co.kr/learn/courses/30/lessons/12935?language=javascript
+
+```javascript
+// 내소스
+function solution(arr) {
+    var answer = [];
+    if(arr.length==1) return [-1];
+    var max = 0;
+    arr.forEach( function(d,i) {        
+        if(d < arr[max]) max = i;    
+    });
+    arr.forEach( function(d,i) {
+        if(i!=max) answer.push(d);
+    });
+    
+    return answer;
+}
+```
+
+
+```javascript
+// 다른 사람 소스 
+function solution(arr) {
+    // Math.min(...arr) ==> arr 배열의 가장 작은 값을 리턴한다.
+    // splice(인덱스, 1) : 해당 배열의 인덱스위치에서 1개의 요소를 삭제한다. 
+    // indexOf(배열값) : 해당 배열의 배열값이 있는 index를 얻는다.
+    arr.splice(arr.indexOf(Math.min(...arr)),1);
+    if(arr.length<1)return[-1];
+    return arr;
+}
+```
+
+```javascript
+// 내소스2
+function solution(arr) {
+    // arr배열의 최소값을 구한다.
+    var min = Math.min(...arr);  
+    // min값이 있는 배열의 인덱스를 구한다.  
+    var idx = arr.indexOf(min)
+    // arr배열의 idx번째위치에서 1개의 요소를 삭제한다.
+    arr.splice(idx,1);
+    if(arr.length<1) return [-1];
+    return arr;
+}
+```
+
+* 짝수와 홀수
++ https://programmers.co.kr/learn/courses/30/lessons/12937?language=javascript
+
+```javascript
+function solution(num) {
+    var answer = num%2==0?"Even":"Odd";
+    return answer;
+}
+```
+
+
+
+* [카카오 인턴] 키패드 누르기
++ https://programmers.co.kr/learn/courses/30/lessons/12937?language=javascript
+
+
+```javascript
+// 내소스
+// 좌표 : [ 행,열 ]
+function solution(numbers, hand) {
+    const Left = "L";
+    const Right = "R";
+    var answer = '';
+    var arr = [ [1,2,3], [4,5,6], [7,8,9], ['*',0,'#' ] ];
+    var l = [ 3, 0 ]; 
+    var r = [ 3, 2 ];
+    var ans = Left;    
+  
+    numbers.forEach( function(d) { 
+        // 해당번호의 좌표를 찾는다.(loc)
+        var loc = [0,0];
+        for(var i=0;i<arr.length;i++) {
+            var idx = arr[i].indexOf(d);
+            if(idx >=0) loc = [i,idx];
+        }
+        
+        // 어느쪽손이 더 가까운지 확인한다.
+        if(loc[1] == 0) 
+            ans = Left;
+        else if(loc[1] == 2) 
+            ans = Right;           
+        else {
+            let left_len = Math.abs(loc[0]-l[0]) + Math.abs(loc[1]-l[1]);
+            let right_len = Math.abs(loc[0]-r[0]) + Math.abs(loc[1]-r[1]);
+            if(left_len<right_len) 
+                ans = Left;
+            else if(left_len>right_len) 
+                ans = Right;
+            else 
+                ans = hand=="right"?Right:Left;
+        }
+         
+        // 더 가까운손이 이동한다.
+        if(ans == Left) { 
+            answer += Left;
+            l = loc;
+        }
+        else {
+            answer += Right;
+            r = loc;            
+        }
+    });
+    
+    return answer;
+}
+```
+
+* 최대공약수와 최소공배수
++ https://programmers.co.kr/learn/courses/30/lessons/12940?language=javascript
+
+
+```javascript
+// 내소스
+// 최대공약수를 구한다.
+function gcdFunc(a,b) {
+    // 유클리드 호제법
+    while(b>0)     {
+        var tmp = b;
+        b = a%b;
+        a = tmp;
+    }
+    return a;
+}
+
+function solution(n, m) {
+    var gcd = gcdFunc(n,m);
+    // 최소공배수는 두수를 곱한값에 최대공약수로 나눈다.
+    var lcd = n*m/gcd;
+    return [gcd,lcd];
+}
+```
+
+
+* 콜라츠 추측
++ https://programmers.co.kr/learn/courses/30/lessons/12943?language=javascript
+
+
+```javascript
+// 내소스
+function solution(num) {
+    var answer = -1;
+    for(var i=0;i<500;i++) {        
+        if(num==1) return i;
+        if(num%2==0) num/=2;
+        else num= num*3+1;
+    }
+    return answer;
+}
+```
+
+
+```javascript
+// 다른사람 소스
+function collatz(num,count = 0) {
+    return num == 1 ? (count >= 500 ? -1 : count) : collatz(num % 2 == 0 ? num / 2 : num * 3 + 1,++count);
+}
+
+function solution(num) {
+    return collatz(num);
+}
+```
+
+
+* 평균 구하기
++ https://programmers.co.kr/learn/courses/30/lessons/12944?language=javascript
+
+
+```javascript
+// 내소스
+function solution(arr) {
+    var answer = 0;
+    arr.forEach( (d) => answer+=d );
+    return answer/arr.length;
+}
+```
+
+
+```javascript
+// 다른사람소스
+function solution(arr) {
+    return array.reduce((a, b) => a + b) / array.length;
+}
+```
+
+* 하샤드 수
++ https://programmers.co.kr/learn/courses/30/lessons/12947?language=javascript
+
+
+```javascript
+// 내소스
+
+
+```
+
+
+
+
+
+
+
+
+
+
