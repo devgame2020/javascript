@@ -1204,8 +1204,275 @@ function solution(arr1, arr2) {
 
 
 
+* x만큼 간격이 있는 n개의 숫자
++ https://programmers.co.kr/learn/courses/30/lessons/12954?language=javascript
+
+
+```javascript
+// 내소스
+function solution(x, n) {
+    var answer = [];
+    for(var i=1;i<=n;i++) answer.push(x*i);
+    return answer;
+}
+```
+
+```javascript
+// 다른사람소스
+// x로 배열을 채우고, map을 사용해서 값을 조정하였다.
+function solution(x, n) {
+    return Array(n).fill(x).map((v, i) => (i + 1) * v)
+}
+```
+
+
+* 직사각형 별찍기
++ https://programmers.co.kr/learn/courses/30/lessons/12969?language=javascript
+
+
+```javascript
+// 내소스
+process.stdin.setEncoding('utf8');
+process.stdin.on('data', data => {
+    const n = data.split(" ");
+    const a = Number(n[0]), b = Number(n[1]);
+    
+    var star = "*".repeat(a);
+    for(var i=0;i<b;i++)
+        console.log(star);
+        
+});
+```
 
 
 
 
+   
+***
+***
+   
+
+
+
+* 예산
++ https://programmers.co.kr/learn/courses/30/lessons/12982?language=javascript
+
+
+```javascript
+// 내소스
+// 오류가 나옴..원인불명.
+function solution(d, budget) {
+    var answer = 0;
+    /////////////////////////////
+    // 이렇게 하면 일부문제 오류발생
+    var arr = d.sort();
+    // 이렇게 하면 정상작동.
+    var arr = d.sort(function(a, b) {
+        return a - b;
+    });    
+    //////////////////////////////
+    var sum = 0;
+    for(var i=0;i<arr.length;i++) {
+        sum += arr[i];
+        if(budget>=sum) answer++;
+    }    
+    return answer;
+}
+```
+
+```javascript
+// 다른사람 소스
+function solution(d, budget) {
+    var count = 0;
+    var sum = 0;
+    
+    d.sort(function(a, b) {
+        return a - b;
+    });
+    
+    for(var i=0; i < d.length; i++) {
+        count++;
+        sum += d[i];
+        if(sum > budget) {
+            count--;
+            break;
+        }
+    }
+    return count;    
+}
+```
+
+
+
+
+* [1차] 비밀지도
++ https://programmers.co.kr/learn/courses/30/lessons/17681?language=javascript
+
+
+```javascript
+// 내소스
+function solution(n, arr1, arr2) {  
+    var answer = [];
+    for(var i=0;i<n;i++) {
+        var x = (arr1[i] | arr2[i]).toString(2);
+        answer.push(" ".repeat(n-x.length) + x.replace(/0/g," ").replace(/1/g,"#"));
+    }
+    return answer;
+}
+```
+
+```javascript
+// 다른사람 소스
+function solution(n, arr1, arr2) {  
+    return arr1.map((i, index) =>('0'.repeat(n) + (i | arr2[index]).toString(2)).slice(-n)).map(i => i.replace(/0/g, ' ').replace(/1/g, '#'));
+}
+```
+
+
+* 실패율
++ https://programmers.co.kr/learn/courses/30/lessons/42889?language=javascript
+
+
+```javascript
+// 내소스
+function solution(N, stages) {
+    var answer = [];
+    var arr = [];
+    for(var i=1;i<=N;i++) {
+        var tot = 0;
+        var fail=0;
+        stages.forEach( function(d) { 
+            if(d>=i) tot++;
+            if(d==i) fail++;
+        });
+        
+        arr.push( [ i,fail==0?0:fail/tot ]);
+    }
+    arr = arr.sort( function(a,b)  {
+        if(a[1] == b[1]) return a[0]-b[0];
+        return b[1] - a[1];
+    });
+    arr.forEach( (d) => answer.push(d[0]));
+    return answer;
+}
+```
+
+
+
+
+
+
+
+* [1차] 다트 게임
++ https://programmers.co.kr/learn/courses/30/lessons/17682?language=javascript
+
+
+```javascript
+// 내소스
+function solution(dartResult) {
+    var answer = 0;
+    var idx = 0;
+    var arr = [];
+        
+    var data="";
+    for(var i=0;i<dartResult.length;) {        
+        var d = [ ...dartResult.substring(i,i+4)];             
+        var num = 0;
+        var b = '';
+        var opt = '';
+        if(d[1] == '0') { 
+            num = parseInt(d[0]+d[1]);
+            b = d[2];
+            if(d[3] == '#' || d[3] == '*') {
+                opt = d[3];
+                i+=4;                
+            }
+            else
+                i+=3;
+        }
+        else { 
+            num = parseInt(d[0])
+            b = d[1];
+            if(d[2] == '#' || d[2] == '*') {
+                opt = d[2];
+                i+=3;                
+            }
+            else
+                i+=2;
+                
+        }            
+        
+        arr.push( [num,b,opt] );
+    }
+    
+    var jumsu = [];
+    arr.forEach( function(d,i) {
+        var score = parseInt(d[0]);
+        if(d[1] == 'D') score = Math.pow(score,2);
+        else if(d[1] == 'T') score = Math.pow(score,3);        
+        jumsu[i] = score;
+        
+        if(d[2] == '*') {
+            jumsu[i] = score*2;
+            if(i>0) jumsu[i-1] = jumsu[i-1]*2;
+        }
+        else if(d[2] == '#') {
+            jumsu[i] = -score;
+        }
+    });
+    jumsu.forEach( (d) => answer+=d );
+    
+    return answer;
+}
+```
+
+
+```javascript
+// 개선된 소스
+function solution(dartResult) {    
+    var answer = 0;
+    var idx = 0;
+    var arr = [];
+        
+    var data="";
+    for(var i=0;i<dartResult.length;) {        
+        var d = [ ...dartResult.substring(i,i+4)];             
+        
+        var nsize=1;
+        if(d[1] == '0') nsize=2;
+        
+        var b = 1;
+        if(d[nsize] == 'D') b = 2;
+        else if(d[nsize] == 'T') b = 3;
+
+        var opt = 1;
+        if(d[nsize+1] == '*') opt = 2;
+        else if(d[nsize+1] == '#') opt = -1;
+        
+        if(opt!=1) i+=nsize+2;
+        else i+=nsize+1;    
+        
+        arr.push( [parseInt(d.join('').substring(0,nsize)),b,opt] );
+    }
+    
+    var jumsu = [];
+    arr.forEach( function(d,i) {
+        jumsu[i] = Math.pow(parseInt(d[0]),d[1])*d[2];        
+        if(d[2] == 2 && i>0) jumsu[i-1] = jumsu[i-1]*d[2];
+
+    });
+    jumsu.forEach( (d) => answer+=d );
+    
+    return answer;
+}
+```
+
+
+
+
+
+   
+***
+***
+   
 
