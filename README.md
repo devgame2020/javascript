@@ -33,6 +33,17 @@ console.log(arr.join(''));
 // array선언와 동시에 초기화
 var arr = Array.from({length:5}, (data,idx)=>idx);
 console.log(arr);
+// 배열10개를 만들고 모두 1로 초기화
+var arr2 = Array(10).fill(1);
+
+
+// 배열에서 최소값 구하기
+var arr=[ 5,25,8,3,99,33];
+var min = Math.min(...arr);  
+
+// 배열에서 특정값제거
+// arr배열에서 10을 찾아서 제거한다.
+arr.splice(arr.indexOf(10),1);
 
 // set 사용법
 var set = new Set();
