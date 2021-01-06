@@ -14,11 +14,11 @@ arr.forEach( (d,i) => console.log(i + ":" + d) );
 // Array reduce
 var arr = [ 1,2,3,4,5 ];
 // a : 이전 리턴값
-// b : data
-// c : index 
-var sum = arr.reduce(function(a,b,c) { 
-    console.log(a,b,c);
-    return a+b;
+// d : data
+// i : index 
+var sum = arr.reduce(function(a,d,i) { 
+    console.log(a,d,i);
+    return a+d;
 });
 
 // Array map

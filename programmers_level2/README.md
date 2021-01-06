@@ -283,3 +283,91 @@ function solution(citations) {
    
 
 
+
+* 다음 큰 숫자
++ https://programmers.co.kr/learn/courses/30/lessons/12911?language=javascript
+
+
+```javascript
+// 내소스 
+function solution(n) {
+    var answer = 0;
+    let cnt = 0;
+    [...n.toString(2)].forEach( (d) =>{ cnt+=parseInt(d); });
+    for(var i=n+1;;i++) {
+        let sum=0;
+        [...i.toString(2)].forEach( (d) =>{ sum+=parseInt(d); });
+        if(sum == cnt) {
+            answer = i;
+            break;
+        }
+    }
+    
+    return answer;
+}
+```
+
+
+
+
+
+* 최솟값 만들기
++ https://programmers.co.kr/learn/courses/30/lessons/12941?language=javascript
+
+
+```javascript
+// 내소스 (시간초과)
+function recursion(B,arr,num=Number.MAX_VALUE,idx=0) {
+    if(idx == arr.length-1) {
+        let sum=0;
+        for(let x=0;x<B.length;x++) 
+            sum += (arr[x]*B[x]);
+        if(num>sum) num=sum;
+        return num;
+    }    
+    
+    for(let i=idx;i<arr.length;i++) {
+        let tmp = arr[idx];
+        arr[idx] = arr[i];
+        arr[i] = tmp;
+        
+        let num2 = recursion(B,arr,num,idx+1);
+        if(num2<num) num=num2;
+        
+        arr[i] = arr[idx];
+        arr[idx] = tmp;
+    }
+    return num;
+}
+
+function solution(A,B){
+    var answer = 0;
+    answer = recursion(B,A);
+    return answer;
+}
+```
+
+
+```javascript
+// 내소스 (통과됨) 
+// A는 오름차순, B는 내림차순으로 정렬후 서로 곱한다.
+function solution(A,B){
+    var answer = 0;
+    A.sort((a,b) => { return a-b });
+    B.sort((a,b) => { return b-a });    
+    A.forEach( (d,i) => answer+=(d*B[i]));
+    return answer;
+}
+```
+
+
+```javascript
+// 다른사람소스 
+function solution(A,B){
+    A.sort((a, b) => a - b)
+    B.sort((a, b) => b - a)
+    return A.reduce((total, val, idx) => total + val * B[idx], 0)
+}
+```
+
+
