@@ -217,3 +217,69 @@ function solution(brown, yellow) {
 
 
 
+* 가장 큰 수
++ https://programmers.co.kr/learn/courses/30/lessons/42746?language=javascript
+
+
+```javascript
+// 내소스 
+function solution(numbers) {
+    const answer = numbers.sort((a, b) => {      
+        let aa = parseInt(""+a+b);
+        let bb = parseInt(""+b+a);
+        
+        if (aa < bb) return 1;
+        if (aa > bb) return -1;
+        return;
+    }).join('');    
+    
+    var i;
+    for(i=0;i<answer.length-1;i++) { 
+        if(answer[i] != "0")  
+            break;  
+    }
+    
+    return answer.substring(i);
+}
+```
+
+
+```javascript
+// 다른사람 소스
+function solution(numbers) {
+    var answer = numbers.map(v=>v+'')
+                        .sort((a,b) => (b+a)*1 - (a+b)*1)
+                        .join('');
+
+    // 맨앞이 0이면 그 뒤의 숫자들은 무조건 "0"이다.
+    return answer[0]==='0'?'0':answer;
+}
+```
+
+
+* H-Index
++ https://programmers.co.kr/learn/courses/30/lessons/42747?language=javascript
+
+
+```javascript
+// 내소스 
+function solution(citations) {
+    var answer = 0;
+    citations.sort( (a,b) =>{
+       return b-a; 
+    });
+
+    for(;answer<citations.length;answer++) {
+        if(answer>=citations[answer]) break;
+    }
+    return answer;
+}
+```
+
+
+   
+***
+***
+   
+
+
