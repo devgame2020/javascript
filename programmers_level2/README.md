@@ -371,3 +371,62 @@ function solution(A,B){
 ```
 
 
+* 피보나치 수
++ https://programmers.co.kr/learn/courses/30/lessons/12945?language=javascript
+
+
+```javascript
+// 내소스 
+function solution(n) {
+    var answer = 0;
+    var n0 = 1;
+    var n1 = 1;
+    var n2 = 0;
+    for(let i=2;i<n;i++) {
+        let sum=n0+n1;
+        n2 = n1;
+        n1 = n0;
+        n0 = sum % 1234567;
+    }
+    answer = n0;
+    
+    return answer;
+}
+```
+
+
+
+* 최댓값과 최솟값
++ https://programmers.co.kr/learn/courses/30/lessons/12939?language=javascript#
+
+
+```javascript
+// 내소스
+function solution(s) {
+    var answer = '';    
+    const arr = s.split(" ");
+    let min = Math.min(...arr);
+    let max = Math.max(...arr);
+    answer = min + " " + max;
+    return answer;
+}
+```
+
+
+```javascript
+// 다른사람소스
+function solution(s) {
+    const arr = s.split(' ');
+
+    return Math.min(...arr)+' '+Math.max(...arr);
+}
+```
+
+
+   
+***
+***
+   
+
+
+
