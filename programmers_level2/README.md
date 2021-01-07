@@ -429,4 +429,66 @@ function solution(s) {
    
 
 
+* 위장
++ https://programmers.co.kr/learn/courses/30/lessons/42578?language=javascript
 
+
+```javascript
+// 내소스
+// 각 종류+1 을 모두 곱한후에 1을 빼면 된다. 
+function solution(clothes) {
+    var answer = 1;
+    var arr = [];
+    // map에 각각의 옷을 넣는다.
+    var mMap = new Map();
+    clothes.forEach( (d,i) => {
+        if(!mMap.get(d[1])) 
+            mMap.set(d[1], [ d[0] ]);
+        else
+            mMap.get(d[1]).push(d[0]);
+    });
+
+    // 각각의 타입의 갯수를 배열에 넣는다.
+    var arr2 = [];    
+    for(let [key,value] of mMap) {
+        arr2.push(value.length);
+    }
+    
+    arr2.forEach( (d,i) => {
+       answer *= (d+1);
+    });
+    answer--;
+    return answer;
+}
+```
+
+* 소수 만들기
++ https://programmers.co.kr/learn/courses/30/lessons/12977?language=javascript
+
+
+```javascript
+// 남의소스
+function isPrime(num) {
+    for(let i=2;i<num;i++)
+        if(num%i == 0) return false;
+    return true;
+}
+
+function solution(nums) {
+    var answer = 0;
+    
+    // 배열에서 3개씩 추출한다.
+    let len = nums.length;
+    for(let i=0;i<len;i++) {
+        for(let j=i+1;j<len;j++) {
+            for(let k=j+1;k<len;k++) {
+                let num = nums[i] + nums[j] + nums[k];
+                // 소수인지 체크한다.
+                if(isPrime(num)) answer++;
+            }
+        }
+    }
+    
+    return answer;
+}
+```

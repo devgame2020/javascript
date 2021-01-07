@@ -21,6 +21,9 @@ var sum = arr.reduce(function(a,d,i) {
     return a+d;
 });
 
+// arr배열에서 2보다 큰 요소들만 추출하여 arr2에 넣는다.
+var arr2 = arr.filter( (d,idx) => d>2);
+
 // Array map
 const array1 = [1, 4, 9, 16];
 const map1 = array1.map(x => x * 2);
