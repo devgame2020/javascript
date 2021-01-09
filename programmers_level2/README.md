@@ -492,3 +492,27 @@ function solution(nums) {
     return answer;
 }
 ```
+
+
+* 올바른 괄호
++ https://programmers.co.kr/learn/courses/30/lessons/12909?language=javascript
+
+
+```javascript
+// 내소스
+function solution(s){
+    var answer = true;
+    var stack = [];
+    [...s].forEach( (d) => {
+        if(d == "(") stack.push(d);
+        if(d == ")") {
+            if(stack.pop() === undefined) answer = false;
+            
+        }
+    });
+    if(stack.length>0) return false;
+
+    return answer;
+}
+```
+
