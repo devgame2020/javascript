@@ -61,3 +61,47 @@ console.log(arr2);
 
 
 
+
+
+# 동적계획법 과 분할정복 
+* 동적계획법
+    * 입력크기가 작은 부분문제들을 해결후, 해당부분 문제의 해를 활용해서, 보다 큰 크기의 부분문제를 해결하는방법
+    * 상향식 접근방법
+    * 메모이제이션(Memoization) 
+* 분할정복
+    * 문제를 나눌수없을때까지 나누어서 각각을 풀면서 다시 합병하여 문제의 답을 얻는 알고리즘
+    * 하양식 접근법
+ 
+* 공통점 : 문제를 잘개 쪼개서 분할함.
+* 차이점 
+    * 동적계획법
+        * 부분문제는 중복되어, 상위문제해결시 재활용됨
+    * 분할정복 
+        * 부분문제는 서로 중복되지 않음. 
+
+* 예시
+    * 피보나치 수열 
+        * F(n) = F(n-1) + F(n-2)
+```javascript
+function fibo(n) {
+	if(n<=1) return n;
+	return fibo(n-1) + fibo(n-2);
+}
+
+var a = fibo(10);
+console.log(a);
+```        
+
+
+```javascript
+function fibo_dp(n) {
+	var arr = Array(n+1).fill(0);
+	arr[0] = 0;
+	arr[1] = 1;
+	for(var i=2;i<=n;i++) 
+		arr[i] = arr[i-1] + arr[i-2]
+	return arr[n];
+}
+var a = fibo_dp(10);
+console.log(a);
+```

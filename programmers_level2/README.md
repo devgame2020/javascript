@@ -516,3 +516,127 @@ function solution(s){
 }
 ```
 
+* 큰 수 만들기
++ https://programmers.co.kr/learn/courses/30/lessons/42883?language=javascript
+
+
+```javascript
+// 다른사람소스 
+function solution(number, k) {
+    var answer = '';
+
+    var stack = []; 
+    for (var i = 0; i < number.length; i++) { 
+        var now = number[i]; 
+        // 이번에 입력받은값 now가 현재 스택에 있는값보다 크면 해당 값을 제거한다.
+        // K가 0이 될때까지 제거하거나, now보다 큰값일때까지 반복한다. 
+        while (k > 0 && stack[stack.length - 1] < now) {
+            stack.pop();
+            k--;
+        }
+        stack.push(now);
+    }
+
+    stack.splice(stack.length - k, k);
+    answer = stack.join('');
+    return answer;    
+}
+```
+
+
+
+   
+***
+***
+   
+
+
+* 조이스틱
++ https://programmers.co.kr/learn/courses/30/lessons/42860?language=javascript
+
+
+```javascript
+// 다른사람소스
+// "BBBBAAAB" ==> 10 (12가 나옴)
+// 해당 소스는 통과는 되었지만, 틀린경우도 있음.
+// "AAAA" => 0 (-2가 나옴)
+function solution(name) {
+    const arr = [0];
+
+    const answer = [...name].reduce((answer, s, i)=>{
+        if(s === "A"){
+            // 현재 문자가 A인데, 이전문자가 A가 아니라면, 연결된 문자의 갯수를 구해서 push한다.
+            if(name[i-1]!= "A") arr.push(continuous(name.substring(i))-(i-1));
+            return answer + 1;
+        }    
+        return answer + ascii(name, i) + 1;
+    }, 0);
+
+    // 
+    return answer - Math.max(...arr) -1;
+}
+
+function ascii(name, i){
+    const num = name.charCodeAt(i);
+    return (num > 78)? 91 - num : num - 65;
+}
+
+function continuous(name){
+    let repeat = 0;
+    for(let i = 0; i < name.length; i++){
+        if(name[i] != "A") break;
+        repeat++;
+    }
+    return repeat;
+}
+```
+
+
+
+
+
+* 구명보트
++ https://programmers.co.kr/learn/courses/30/lessons/42885?language=javascript
+
+
+```javascript
+// 내소스 
+function solution(people, limit) {
+    var answer = 0;
+    people.sort((a,b) => { return b-a; } );
+    for(var i=0,r=people.length-1;i<people.length;i++) {        
+        if(i > r) break;
+        if(people[i]+people[r] <= limit) {
+            r--;
+        }
+        answer++;        
+    }
+    return answer;
+}
+```
+
+
+* 숫자의 표현
++ https://programmers.co.kr/learn/courses/30/lessons/12924?language=javascript
+
+
+```javascript
+// 내소스 
+function solution(n) {
+    var answer = 1;
+    for(var i=1;i<n;i++) {
+        let sum=i;
+        for(var j=i+1;j<n;j++) {
+            sum+=j;
+            if(sum==n) { 
+                answer++;
+                break;
+            }
+            else if(sum>n) break;
+        }
+    }
+    return answer;
+}
+```
+
+
