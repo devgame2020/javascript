@@ -640,3 +640,149 @@ function solution(n) {
 ```
 
 
+
+
+* 행렬의 곱셈
++ https://programmers.co.kr/learn/courses/30/lessons/12949?language=javascript#
+
+
+```javascript
+// 내소스 
+function solution(arr1, arr2) {
+    return arr1.map((row) => arr2[0].map((x,y) => row.reduce((a,b,c) => a + b * arr2[c][y], 0)))
+
+    var answer = [];    
+    arr1.forEach( (d,i) => {        
+        for(let j=0;j<arr2[0].length;j++) {
+            let sum=0;
+            for(let k=0;k<d.length;k++) {
+                sum += (d[k]*arr2[k][j]);
+            }
+            if(!answer[i]) answer[i] = [];
+            answer[i][j] = sum;
+        }        
+    });
+    return answer;
+}
+```
+
+
+
+   
+***
+***
+   
+
+
+* 가장 큰 정사각형 찾기
++ https://programmers.co.kr/learn/courses/30/lessons/12905?language=javascript
+
+
+```javascript
+function solution(board)
+{
+    var answer = 0;
+    var y = board.length;
+    var x = board[0].length;
+    
+    // 표가 x나 y의 길이가 1일경우 가장큰값을 구한다.
+    if(x<2 || y<2) {
+        return Math.max([...board]);
+    }
+    
+    for(let i=1;i<y;i++) {
+        for(let j=1;j<x;j++) {
+            if(board[i][j] == 1) {
+                // 현재위치의 값이 1인경우
+                // 왼쪽,위,왼쪽위의 3값중 가장 작은값 + 1 을 저장한다.
+                let d = Math.min(board[i-1][j],board[i][j-1],board[i-1][j-1]); 
+                board[i][j] = d+1;
+                answer = Math.max(d+1, answer);
+            }
+        }
+    }
+    
+    return answer*answer;
+}
+```
+
+
+
+* 오픈채팅방
++ https://programmers.co.kr/learn/courses/30/lessons/42888?language=javascript
+
+
+```javascript
+// 내소스
+function solution(record) {
+    var answer = [];
+    var user = [];
+    record.forEach( (d) => {
+        let arr = d.split(" ");
+        if(!user[arr[1]]) user[arr[1]]=arr[2];
+        // 채팅방을 나간후 다른이름으로 변경후 입장할수있기때문에, Enter도 포함하였다.
+        if(arr[0] === "Change" || arr[0] === "Enter") {
+            user[arr[1]]=arr[2]; 
+        }
+    });
+    
+    record.forEach( (d) => {
+        let arr = d.split(" ");
+        if(arr[0] == "Enter") {
+            answer.push(user[arr[1]]+"님이 들어왔습니다.")            
+        } else if(arr[0] == "Leave") {
+            answer.push(user[arr[1]] + "님이 나갔습니다.")             
+        }   
+    });    
+    return answer;
+}
+```
+
+
+
+
+* 타겟 넘버
++ https://programmers.co.kr/learn/courses/30/lessons/43165?language=javascript
+
+
+```javascript
+// 내소스
+function solution(numbers, target) {
+    var answer = 0;
+    var arr = Array(numbers.length).fill(0);
+    // 재귀호출을 사용하여 모든경우의 수를 구하여 계산하였다.
+    function rcall(n) {
+        if(n>=numbers.length) {
+            let sum=0;
+            for(let i=0;i<n;i++) 
+                sum += (arr[i]*numbers[i]);
+            if(sum == target) answer++;
+            return;
+        }
+        arr[n] = -1;
+        rcall(n+1);
+        arr[n] = 1;
+        rcall(n+1);
+    }
+    
+    rcall(0);
+    
+    return answer;
+}
+```
+
+
+* 땅따먹기
++ https://programmers.co.kr/learn/courses/30/lessons/12913?language=javascript
+
+
+```javascript
+// 내소스
+
+```
+
+
+   
+***
+***
+   
