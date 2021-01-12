@@ -777,8 +777,18 @@ function solution(numbers, target) {
 
 
 ```javascript
-// 내소스
-
+// 남의소스
+function solution(land) {
+    var answer = 0;
+    for(let i=1;i<land.length;i++) {
+        land[i][0] += Math.max(land[i-1][1],land[i-1][2],land[i-1][3]);
+        land[i][1] += Math.max(land[i-1][0],land[i-1][2],land[i-1][3]);
+        land[i][2] += Math.max(land[i-1][0],land[i-1][1],land[i-1][3]);
+        land[i][3] += Math.max(land[i-1][0],land[i-1][1],land[i-1][2]);        
+    }
+    answer = Math.max(...land[land.length-1]);
+    return answer;
+}
 ```
 
 
@@ -786,3 +796,373 @@ function solution(numbers, target) {
 ***
 ***
    
+
+* 스킬트리
++ https://programmers.co.kr/learn/courses/30/lessons/49993?language=javascript
+
+
+```javascript
+// 내소스
+function solution(skill, skill_trees) {
+    var answer = 0;
+    var arr=[...skill];
+    skill_trees.forEach( (d) => {
+        let str = "";
+        [...d].forEach( (d2) => { if(arr.indexOf(d2) >=0) str += d2; });
+        if(skill.indexOf(str) == 0) answer++; 
+    });
+    return answer;
+}
+```
+
+function solution(skill, skill_trees) {
+    function isCorrect(n) {
+        // const test = '[' + 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').filter(v => !skill.includes(v)).join('') + ']*';
+        let test = skill.split('');
+        for (var i = 0; i < n.length; i++) {
+            if (!skill.includes(n[i])) continue;
+            if (n[i] === test.shift()) continue;
+            return false;
+        }
+        return true;
+    }    
+
+    return skill_trees.filter(isCorrect).length;
+}
+
+
+* 
++ 
+
+
+```javascript
+// 내소스
+
+```
+
+
+* 
++ 
+
+
+```javascript
+// 내소스
+
+```
+
+
+* 
++ 
+
+
+```javascript
+// 내소스
+
+```
+
+
+
+   
+***
+***
+   
+
+
+
+
+* 
++ 
+
+
+```javascript
+// 내소스
+
+```
+
+
+
+* 
++ 
+
+
+```javascript
+// 내소스
+
+```
+
+
+* 
++ 
+
+
+```javascript
+// 내소스
+
+```
+
+
+* 
++ 
+
+
+```javascript
+// 내소스
+
+```
+
+
+
+   
+***
+***
+      
+
+
+
+* 
++ 
+
+
+```javascript
+// 내소스
+
+```
+
+
+
+* 
++ 
+
+
+```javascript
+// 내소스
+
+```
+
+
+* 
++ 
+
+
+```javascript
+// 내소스
+
+```
+
+
+* 
++ 
+
+
+```javascript
+// 내소스
+
+```
+
+
+
+   
+***
+***
+      
+
+
+
+
+
+* 
++ 
+
+
+```javascript
+// 내소스
+
+```
+
+
+
+* 
++ 
+
+
+```javascript
+// 내소스
+
+```
+
+
+* 
++ 
+
+
+```javascript
+// 내소스
+
+```
+
+
+* 
++ 
+
+
+```javascript
+// 내소스
+
+```
+
+
+
+   
+***
+***
+      
+
+
+
+* 
++ 
+
+
+```javascript
+// 내소스
+
+```
+
+
+
+* 
++ 
+
+
+```javascript
+// 내소스
+
+```
+
+
+* 
++ 
+
+
+```javascript
+// 내소스
+
+```
+
+
+* 
++ 
+
+
+```javascript
+// 내소스
+
+```
+
+
+
+   
+***
+***
+      
+
+
+
+
+* 
++ 
+
+
+```javascript
+// 내소스
+
+```
+
+
+
+* 
++ 
+
+
+```javascript
+// 내소스
+
+```
+
+
+* 
++ 
+
+
+```javascript
+// 내소스
+
+```
+
+
+* 
++ 
+
+
+```javascript
+// 내소스
+
+```
+
+
+
+   
+***
+***
+      
+
+
+
+
+* 
++ 
+
+
+```javascript
+// 내소스
+
+```
+
+
+
+* 
++ 
+
+
+```javascript
+// 내소스
+
+```
+
+
+* 
++ 
+
+
+```javascript
+// 내소스
+
+```
+
+
+* 
++ 
+
+
+```javascript
+// 내소스
+
+```
+
+
+
+   
+***
+***
+      
+
