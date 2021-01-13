@@ -831,36 +831,139 @@ function solution(skill, skill_trees) {
 }
 
 
-* 
-+ 
+* 멀쩡한 사각형
++ https://programmers.co.kr/learn/courses/30/lessons/62048?language=javascript
+
+
+```javascript
+// 
+function solution(w, h) {
+    function gcd(w,h) {
+        let mod = w%h;
+        if(mod==0) return h;
+        return gcd(h,mod);
+    }
+
+    return w*h - (w+h-gcd(w,h));
+}
+```
+
+
+* 문자열 압축
++ https://programmers.co.kr/learn/courses/30/lessons/60057?language=javascript
+
+
+```javascript
+// 
+function solution(s) {
+    var answer = 0;
+    var repeat = Math.floor(s.length / 2);
+    var arrForNewStr = [];
+    
+    // 문자열의 길이가 1이면 그냥 1리턴
+    if(s.length==1) return 1;
+    
+    for (var i=0; i<repeat; i++) {
+        var num = i+1; // 압축 기준 단위 수
+        var count = 1; // 동일 글자가 몇 번 반복되는지
+        var newStr = '';
+        for (var j=0; j<s.length; j=j+num) { // 하나의 단위에 대한 
+            var currentSub = s.substring(j, j+num); //substring(a,b)
+            var nextSub = s.substring(j+num, j+num+num);
+      
+            if( currentSub === nextSub) {   // 이전문자열과 같으면 1 증가 
+                count += 1;
+            } else {    // 문자열이 다르면 
+                if(count !== 1){    // 동일한문자열이 2이상일경우
+                     newStr = newStr + count + currentSub;
+                } else {    // 압축이 안되는 문자열이므로, 그냥 붙인다. 
+                     newStr = newStr + currentSub;
+                } 
+                count = 1;
+            }
+        
+        }  
+        
+        // 2. 각 경우의 문자열 개수중 가장 짧은 것
+        arrForNewStr.push(newStr.length);
+    }
+    
+    
+    answer = Math.min(...arrForNewStr);
+   
+    
+    return answer;
+}
+```
+
+
+* 괄호 변환
++ https://programmers.co.kr/learn/courses/30/lessons/60058?language=javascript
 
 
 ```javascript
 // 내소스
+function solution(p) {
+    var answer = '';
+    
+    function split(p) {
+        let left=0,right=0;
+        for(let i=0;i<p.length;i++) {
+            if(p[i] == "(") left++;
+            if(p[i] == ")") right++;
+            if(left == right) {
+                return  { u:p.substr(0,i+1), v:p.substr(i+1) };
+            }
+        }
+        return { u:p, v:"" };
+    }
 
+    function reverse(p) {
+    	let str = "";
+        for(let i=1;i<p.length-1;i++) {
+            if(p[i] === "(") 
+            	str+=")";
+            else
+            	str+="(";
+        }
+        return str;
+    }
+
+    function process(p) {
+        if (p.length < 1) return "";
+        let {u, v} = split(p);
+        if(u[0]=="(" && u[u.length-1] ==")") return u + process(v);
+        else {
+            return "(" + process(v) + ")" + reverse(u);
+        }        
+    }
+    answer = process(p);
+    
+    return answer;
+}
 ```
-
-
-* 
-+ 
 
 
 ```javascript
-// 내소스
+// 다른사람소스
+function reverse(str) {
+  return str.slice(1, str.length - 1).split("").map((c) => (c === "(" ? ")" : "(")).join("");
+}
 
+function solution(p) {
+  if (p.length < 1) return "";
+
+  let balance = 0;
+  let pivot = 0;
+  do { balance += p[pivot++] === "(" ? 1 : -1 } while (balance !== 0);
+
+  const u = p.slice(0, pivot);
+  const v = solution(p.slice(pivot, p.length));
+
+  if (u[0] === "(" && u[u.length - 1] == ")") return u + v;
+  else return "(" + v + ")" + reverse(u);
+}
 ```
-
-
-* 
-+ 
-
-
-```javascript
-// 내소스
-
-```
-
-
 
    
 ***

@@ -105,3 +105,12 @@ function fibo_dp(n) {
 var a = fibo_dp(10);
 console.log(a);
 ```
+
+* 두수의 최대 공약수를 구하기
+```javascript
+    function gcd(w,h) {
+        let mod = w%h;
+        if(mod==0) return h;
+        return gcd(h,mod);
+    }
+```    
