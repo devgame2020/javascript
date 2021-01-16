@@ -1105,34 +1105,133 @@ function solution(s)
 
 
 
-* 
-+ 
+* 쿼드압축 후 개수 세기
++ https://programmers.co.kr/learn/courses/30/lessons/68936?language=javascript
 
 
 ```javascript
 // 내소스
-
+function solution(arr) {
+    var answer = [0,0];
+    
+    function rec(x,y,x2,y2) {
+        if(x2-x == 1) {
+            let ar = [ 0,0 ];
+            ar[arr[x][y]]++;
+            ar[arr[x][y2]]++;
+            ar[arr[x2][y]]++;
+            ar[arr[x2][y2]]++;
+            if(ar[0] == 4) return 0;
+            if(ar[1] == 4) return 1;
+            answer[0] += ar[0];
+            answer[1] += ar[1];
+            return -1;
+        }
+        else {
+            let sz = Math.floor((x2-x)/2);
+            let set = new Set();
+            let ar = [ 0,0 ];
+            ar[rec(x,y,x+sz,y+sz)]++;
+            ar[rec(x+sz+1,y,x2,y+sz)]++;
+            ar[rec(x,y+sz+1,x+sz,y2)]++;
+            ar[rec(x+sz+1,y+sz+1,x2,y2)]++;
+            if(ar[0] == 4) return 0;
+            if(ar[1] == 4) return 1;
+            answer[0] += ar[0];
+            answer[1] += ar[1];
+            return -1;
+        }
+    }
+    
+    let ret = rec(0,0,arr.length-1,arr.length-1);
+    if(ret>=0) answer[ret]++;
+    
+    return answer;
+}
 ```
 
 
 
-* 
-+ 
+* 삼각 달팽이
++ https://programmers.co.kr/learn/courses/30/lessons/68645?language=javascript
 
 
 ```javascript
 // 내소스
-
+function solution(n) {
+    var answer = [];
+    
+    var arr = Array.from(Array(n), () => Array());
+    console.log(arr);
+    
+    let cnt = 1;
+    let x=0,y=-1;    
+    for(;;) {
+        for(let i=0;i<n;i++) {
+            arr[++y][x] = cnt++;
+        }
+        n--;
+        if(n===0) break;
+        for(let i=0;i<n;i++) {
+            arr[y][++x] = cnt++;
+        }
+        n--;
+        if(n===0) break;
+        for(let i=0;i<n;i++) {
+            arr[--y][--x] = cnt++;
+        }
+        n--;
+        if(n===0) break;
+    }
+    
+    arr.forEach( (d) => { d.forEach( (d2) => answer.push(d2) ) } );
+    return answer;
+}
 ```
 
 
-* 
-+ 
+```javascript
+// 내소스(좀더 간결하게정리함.)
+function solution(n) {
+    var answer = [];
+    
+    var arr = Array.from(Array(n), () => Array());
+    console.log(arr);
+    
+    let x=0,y=-1;    
+    for(let k=n,cnt=1;k>0;k-=3) {
+        for(let i=0;i<k;i++) arr[++y][x] = cnt++;
+        for(let i=0;i<k-1;i++) arr[y][++x] = cnt++;
+        for(let i=0;i<k-2;i++) arr[--y][--x] = cnt++;
+    }
+    
+    arr.forEach( (d) => { d.forEach( (d2) => answer.push(d2) ) } );
+    return answer;
+}
+```
+
+
+
+* 영어 끝말잇기
++ https://programmers.co.kr/learn/courses/30/lessons/12981?language=javascript
 
 
 ```javascript
 // 내소스
-
+function solution(n, words) {
+    let set = new Set();
+    let i=0;
+    let ch = words[0].charAt(0);
+    for(;i<words.length;i++) {
+        if(ch !== words[i].charAt(0) || set.has(words[i]) == true) 
+            break;
+        set.add(words[i]);
+        ch = words[i].charAt(words[i].length-1);
+    }
+    
+    if(i==words.length) return [0,0];
+    return [ i%n+1,Math.floor(i/n)+1  ] ;
+}
 ```
 
 
