@@ -33,6 +33,12 @@ const map1 = array1.map(x => x * 2);
 // 배열의 모든 원소를 붙여서 1개의 String으로 변환
 console.log(arr.join(''));
 
+// a 를 int array형인 b로 변환
+var a = "1,2,3,4";
+var b = a.split(',').map(function(item) {
+    return parseInt(item);
+});
+
 // array선언와 동시에 초기화
 var arr = Array.from({length:5}, (data,idx)=>idx);
 console.log(arr);

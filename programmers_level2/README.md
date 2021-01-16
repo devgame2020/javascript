@@ -973,44 +973,127 @@ function solution(p) {
 
 
 
-* 
-+ 
+* 튜플
++ https://programmers.co.kr/learn/courses/30/lessons/64065?language=javascript
 
 
 ```javascript
 // 내소스
+function solution(s) {
+    var answer = [];
+    
+    var arr = [];
+    var str = "";
+    [...s.substr(1,s.length-2)].forEach( (d) => {
+        if(d == "{") 
+            str = "";
+        else if(d == "}") 
+            arr.push(str);
+        else 
+            str += d;
+    });
+    arr.sort( (a,b) => {return a.length-b.length;});
+    
+    arr.forEach( (d) => {
+        d.split(",").map( (item) => parseInt(item)).forEach( (d2) => {            
+            if( answer.indexOf(d2) == -1)  answer.push(parseInt(d2));
+        });
+    });
+    
+    return answer;
+}
+```
 
+```javascript
+// 개선된 내소스
+    s.substr(2,s.length-4).split('},{').sort( (a,b) => {return a.length-b.length;}).map(v => v.split(',').map(v => +v)).forEach( (d) => {
+        d.forEach( d2 => {
+            if( answer.indexOf(d2) == -1)  answer.push(d2);
+        })
+    });   
+
+    // s="{{1,2,3},{2,1},{1,2,4,3},{2}}"; ==> "1,2,3", "2,1",....이렇게 문자열을 나눠서 배열에 넣는다.
+    // s.substr(2,s.length-4).split('},{') 
+
+    // 문자열을 길이가 짧은순으로 정렬한다.
+    // sort( (a,b) => {return a.length-b.length;})
+
+    // 각각의 배열을 map을 사용하여, 다시 ","을 기준으로 문자열을 배열로 만든다. v=>+v로 문자를 순자로 변환한다.
+    // "1,2,3" ==> [1,2,3] 으로 변환됨
+    // map(v => v.split(',').map(v => +v))
+
+    // [[2] , [2,1], [1,2,3], [1,2,4,3]] 이렇게 2차원 배열로 되어 있어서, 
+    // 아래와 같이 forEach를 사용하여, answer배열에 없으면 push한다.
+    // forEach( (d) => {
+    //    d.forEach( d2 => {
+    //        if( answer.indexOf(d2) == -1)  answer.push(d2);
+    //    })
+    // });   
 ```
 
 
-
-* 
-+ 
+* 폰켓몬
++ https://programmers.co.kr/learn/courses/30/lessons/1845?language=javascript
 
 
 ```javascript
 // 내소스
-
+function solution(nums) {
+    var answer = 0;
+    var cnt = parseInt(nums.length/2);
+    var set = new Set(nums);
+    if(cnt<set.size) answer=cnt;
+    else answer = set.size;
+    return answer;
+}
 ```
 
 
-* 
-+ 
+* 이진 변환 반복하기
++ https://programmers.co.kr/learn/courses/30/lessons/70129?language=javascript
 
 
 ```javascript
 // 내소스
-
+function solution(s) {
+    var answer = [];
+    var zero=0;
+    
+    function rec(s,fcnt=0) {
+        if(s == "1")
+            return 0;
+        let cnt=0;
+        for(let i=0;i<s.length;i++)
+            if(s.charAt(i) == 0)
+                cnt++;
+        zero += cnt;
+        
+        return rec((s.length-cnt).toString(2)) + 1;
+    }
+    
+    answer.push(rec(s));
+    answer.push(zero);
+    
+    return answer;
+}
 ```
 
 
-* 
-+ 
+* 짝지어 제거하기
++ https://programmers.co.kr/learn/courses/30/lessons/12973?language=javascript
 
 
 ```javascript
 // 내소스
-
+function solution(s)
+{
+    let stack=[];
+    for(let i=0;i<s.length;i++) {
+        if(stack[stack.length-1] == s.charAt(i)) stack.pop();
+        else stack.push(s.charAt(i));
+    }
+    return stack.length==0?1:0;
+}
 ```
 
 
