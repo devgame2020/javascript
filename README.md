@@ -120,3 +120,34 @@ console.log(a);
         return gcd(h,mod);
     }
 ```    
+
+
+
+
+
+
+
+
+
+
+* 정규식 
+```javascript
+    var str = "100-200*300-500+20";
+    // 수식에서 숫자제외한 연산자만 추출
+    let sign = str.replace(/[0-9]/g,"").split("");
+    console.log(sign);
+
+    // 수식에서 숫자만 추출
+    let num = str.split(/[^0-9]/g);
+	num = num.map((it) => {
+		return parseInt(it);
+	});
+    console.log(num);
+
+    // 수식에서 숫자와 연산자를 분리하여  추출
+    const arr = str.split(/(\D)/)
+    console.log(arr);
+```    
+
+
+
