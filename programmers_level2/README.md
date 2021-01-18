@@ -1235,13 +1235,26 @@ function solution(n, words) {
 ```
 
 
-* 
-+ 
+* 점프와 순간 이동
++ https://programmers.co.kr/learn/courses/30/lessons/12980?language=javascript
 
 
 ```javascript
 // 내소스
+function solution(n)
+{
+    var ans = 0;
 
+    function rec(n) {        
+        if(n==1) return 1;
+        if(n%2 == 0) 
+            return rec(n/2);
+        return 1+rec((n-1)/2);
+    }    
+    ans = rec(n);
+
+    return ans;
+}
 ```
 
 
@@ -1255,44 +1268,110 @@ function solution(n, words) {
 
 
 
-* 
-+ 
+* [카카오 인턴] 수식 최대화
++ https://programmers.co.kr/learn/courses/30/lessons/67257?language=javascript
 
 
 ```javascript
-// 내소스
+// 남의소스
+function solution(expression) {
+    const prior = [
+        ['-', '*', '+'],
+        ['-', '+', '*'],
+        ['*', '-', '+'],
+        ['*', '+', '-'],
+        ['+', '-', '*'],
+        ['+', '*', '-']
+    ]
+    let cand = []
 
+    // 수식을 배열로 분리하여 저장한다. 
+    // "100-200*300-500+20" => [ '100', '-', '200', '*', '300', '-', '500', '+', '20' ]
+    const arr = expression.split(/(\D)/)
+    prior.forEach( (opCand) => {
+        // arr배열을 복사하여 temp에 넣는다.
+    	const temp = arr.slice();
+    	opCand.forEach( (exp) => {
+            // includes : 배열이 특정요소를 포함하는지 판별한다.
+            while (temp.includes(exp)) {
+                const idx = temp.indexOf(exp);
+                // idx : 현재 연산자의 위치 
+                // temp.splice(idx - 1, 3, ???) => 현재 연산자의 앞,뒤 숫자를 연산해야하기때문에, -1부터 3개의 요소를 추출하여, 배열에서 제거한다. 그후 ???를 넣는다.
+                // eval() : 문자열을 연산하는 함수 : evel("2_2"); ==> 결과값은 4 가 나온다.
+                // temp.slice(idx - 1, idx + 2).join('') => temp배열의 idx-1 부터 idx+2가지를 추출하여 문자열로 만든다.
+                temp.splice(idx - 1, 3, eval(temp.slice(idx - 1, idx + 2).join('')));
+            }
+        });
+        cand.push(Math.abs(temp[0]))
+    });
+    return Math.max(...cand)
+}
 ```
 
 
 
-* 
-+ 
+* JadenCase 문자열 만들기
++ https://programmers.co.kr/learn/courses/30/lessons/12951?language=javascript
 
 
 ```javascript
 // 내소스
-
+function solution(s) {
+    return s.split(" ").map( (d)=>{
+        return (d ==='')?'' : d[0].toUpperCase() + d.substr(1).toLowerCase();
+    }).join(" ");
+}
 ```
 
 
-* 
-+ 
+* N개의 최소공배수
++ https://programmers.co.kr/learn/courses/30/lessons/12953?language=javascript
 
 
 ```javascript
 // 내소스
-
+function solution(arr) {    
+    function gcdFunc(a,b) {
+        while(b>0) {
+            let tmp = b;
+            b = a%b;
+            a = tmp;
+        }
+        return a;
+    }
+    
+    var answer = arr[0];
+    for(let i=1;i<arr.length;i++) {
+        answer = answer*arr[i]/gcdFunc(answer,arr[i]);       
+    }
+    
+    return answer;
+}
 ```
+// 다른사람 소스
+function solution(arr) {
+    function gcd(a,b) { return a%b?gcd(b,a%b):b }
+    return arr.reduce((a,b)=> a*b/gcd(a,b));
+}
 
-
-* 
-+ 
+* 예상 대진표
++ https://programmers.co.kr/learn/courses/30/lessons/12985?language=javascript#
 
 
 ```javascript
-// 내소스
+// 다른사람소스
+function solution(n,a,b)
+{
+    var answer = 0;
 
+    while(a!=b) {
+        a = Math.ceil(a/2);
+        b = Math.ceil(b/2);
+        answer++;
+    }
+
+    return answer;
+}
 ```
 
 
