@@ -1468,13 +1468,41 @@ function solution(str1, str2) {
 ```
 
 
-* 
-+ 
+* [1차] 캐시
++ https://programmers.co.kr/learn/courses/30/lessons/17680?language=javascript
 
 
 ```javascript
 // 내소스
-
+function solution(cacheSize, cities) {
+    var answer = 0;
+    // 모두 대문자로 변환
+    cities = cities.map( (d) => { return d.toUpperCase(); });
+    var cache = [];
+    
+    // 캐시 사이즈가 0이면 5를 곱해서 리턴
+    if(cacheSize==0) return cities.length*5;
+    
+    cities.forEach( (d) => {
+        let idx = cache.indexOf(d);
+        if(idx === -1) {
+            // 캐시에 없으면 5의 비용을 소모
+            answer+=5;
+            // 캐시가 다 찼으면 맨앞을 삭제
+            if(cache.length >= cacheSize) cache.shift();
+        }
+        else {
+            // 캐시에 있으면 1의 비용을 소모
+            answer++;
+            // 해당 데이타를 삭제
+            cache.splice(idx,1);
+        } 
+        // 캐시에 추가
+        cache.push(d);
+    });
+    
+    return answer;
+}
 ```
 
 
