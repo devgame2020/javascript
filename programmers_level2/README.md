@@ -1383,15 +1383,89 @@ function solution(n,a,b)
 
 
 
-* 
-+ 
+* [1차] 뉴스 클러스터링
++ https://programmers.co.kr/learn/courses/30/lessons/17677?language=javascript
 
 
 ```javascript
 // 내소스
-
+function solution(str1, str2) {
+    function convertArr(str) {
+        var arr= [];
+        [...str.toUpperCase()].reduce( (a,b) => { 
+            if(a.toLowerCase() != a && b.toLowerCase() != b)
+                arr.push(a+b);
+            return b; 
+        });
+        return arr.sort();   
+    }
+    
+    var arr1 = convertArr(str1);
+    var arr2 = convertArr(str2);
+    let i1=0;
+    let i2=0;
+    var inter = []; // 교집합
+    var union = []; // 합집합
+    for(;;) {
+        // 어느 한쪽의 배열이 끝이라면 나머지 배열을 합집합에 넣는다.
+        if(arr1.length <= i1) {
+            for(let i=i2;i<arr2.length;i++) union.push(arr2[i2]);
+            break;
+        }
+        if(arr2.length <= i2) {
+            for(let i=i1;i<arr1.length;i++) union.push(arr1[i1]);
+            break;
+        }
+        
+        let a = arr1[i1];
+        let b = arr2[i2];
+        if(a == b) {
+            inter.push(a);
+            union.push(a);
+            i1++;
+            i2++;
+        }
+        else if(a>b) {
+            union.push(b);
+            i2++;
+        }
+        else if(a<b) {
+            union.push(a);
+            i1++;
+        }         
+    }
+    if(inter.length == 0 && union.length == 0) return 65536;
+    return Math.floor(inter.length/union.length*65536);
+}
 ```
 
+```javascript
+// 다른사람소스
+function solution(str1, str2) {
+    var answer = 0;
+    // 일단 대문자로 모두 변환한다.
+    str1 = str1.toUpperCase();
+    str2 = str2.toUpperCase();
+    // 정규식을 사용하여 문자만 추출한다.
+    var st1A = Array.apply(null, Array(str1.length-1)).map((a,i)=>str1[i]+str1[i+1]).filter(a=>/^[a-zA-Z]+$/.test(a));
+    var st2A = Array.apply(null, Array(str2.length-1)).map((a,i)=>str2[i]+str2[i+1]).filter(a=>/^[a-zA-Z]+$/.test(a));
+    var co = 0;
+    st1A.map(a=>{
+        var i = st2A.indexOf(a);
+        if (i>-1) {
+            co++;
+            st2A.splice(i,1);
+        }
+    });
+    var mo = st1A.length + st2A.length;
+
+    if (mo ===0) {
+        return 65536;
+    } else {
+        return Math.floor(65536 * co / mo);
+    }
+}
+```
 
 
 * 
