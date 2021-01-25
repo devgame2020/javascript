@@ -21,13 +21,33 @@ var sum = arr.reduce(function(a,d,i) {
     return a+d;
 });
 
+//-------------------------------------------------------------------------------------------------
 // arr배열에서 2보다 큰 요소들만 추출하여 arr2에 넣는다.
 var arr2 = arr.filter( (d,idx) => d>2);
+
+let i=3;
+a = ["100", "ryan", "music", "2"];
+a.filter( function(a,b) { console.log(a,b); }); // 100 0 , ryan 1 , music 2,  2 3 이 출력됨
+// i=3 이므로 2진수로 11임 
+// filter로 , a배열의 0,2번째 항목이 추출됨
+b = a.filter((d,idx) => i&(1<<idx)); // ["100", "ryan"]
+b.join(""); // "100ryan"
+
+// 이렇게 1줄로 처리가능
+b = a.filter((d,idx) => i&(1<<idx)).join("");
+//-------------------------------------------------------------------------------------------------
 
 // Array map
 const array1 = [1, 4, 9, 16];
 const map1 = array1.map(x => x * 2);
 // Array [2, 8, 18, 32]
+
+// 
+array1.map( function(x) { 
+    console.log(x);
+    return x;
+});
+
 
 
 // 배열의 모든 원소를 붙여서 1개의 String으로 변환
@@ -44,6 +64,23 @@ var arr = Array.from({length:5}, (data,idx)=>idx);
 console.log(arr);
 // 배열10개를 만들고 모두 1로 초기화
 var arr2 = Array(10).fill(1);
+
+// 배열의 정렬
+let arr = [ 5,3,7,33,22,11,9 ];
+// 오름차순 정렬
+arr.sort( (a,b) => {
+    let c = a-b;
+    // b가 클경우 음수를 리턴하면 오름차순
+    console.log(a,b,c);
+    return c;
+});
+// 내림차순 정렬 
+arr.sort( (a,b) => {
+    let c = b-a;
+    // b가 클경우 양수를 리턴하면 내림차순
+    console.log(a,b,c);
+    return c;
+});
 
 
 // 배열에서 최소값 구하기
@@ -147,6 +184,19 @@ console.log(a);
     // 수식에서 숫자와 연산자를 분리하여  추출
     const arr = str.split(/(\D)/)
     console.log(arr);
+
+
+    let a = "AB12CD";
+    let reg=/[0-9]/g;
+    a.match(reg); // 문자열a에서 숫자만 추출하여 배열로 만든다. [ "1", "2" ]
+    a.indexOf(a.match(reg)[0]); // 해당 문자열에서 최초숫자 Index를 리턴한다. 숫자가 없으면 -1 
+
+
+    let m = "CC#BCC#BCC#BX#CC#B";
+    // 문자# (C#, X#)을 소문자 (c,x) 로 변환한다.
+    m.replace(/(\D)#/g, (s,p1)=>p1.toLowerCase());
+    // a : C# , b : C
+    m.replace(/(\D)#/g, function(a,b) { console.log(a,b); return b;});
 ```    
 
 

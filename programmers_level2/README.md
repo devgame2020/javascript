@@ -1506,23 +1506,97 @@ function solution(cacheSize, cities) {
 ```
 
 
-* 
-+ 
+* [3차] 파일명 정렬
++ https://programmers.co.kr/learn/courses/30/lessons/17686?language=javascript
 
 
 ```javascript
-// 내소스
+// 남의소스
+function solution(files) {
+    var answer = [];
+    // 
+    let answerWrap = files.map((file, index) => ({file, index}));
+ 
+    var compare = (a,b)=>{
+        var regexNum = /[0-9]/g;
+        var numIndexA = a.indexOf((a.match(regexNum))[0]);
+        var numIndexB = b.indexOf((b.match(regexNum))[0]);
+        // a,b 의 Head부분의 문자열을 비교한다.
+        var sortByHead = (a.substring(0, numIndexA)).toLowerCase().localeCompare(b.substring(0, numIndexB).toLowerCase());
 
+        //1, -1, 0
+        if(sortByHead === 0) {// Num기준 정렬
+            var subStrA = parseInt(a.substring(numIndexA));
+            var subStrB = parseInt(b.substring(numIndexB));
+            if(subStrA<subStrB){
+                return -1;
+            }else if(subStrA>subStrB){
+                return 1;
+             }else {
+               return 0;
+            }
+         } else 
+             return sortByHead;;
+     }
+
+   answerWrap.sort((a, b) => {
+      var result = compare(a.file, b.file);
+      // 두 Head값도 같고, 숫자도 같을 경우 index를 기준으로 오름차순 정렬한다.
+      return result === 0 ? a.index - b.index : result;
+    })
+    return answerWrap.map(answer => answer.file);
+}
 ```
 
 
-* 
-+ 
+* [1차] 프렌즈4블록
++ https://programmers.co.kr/learn/courses/30/lessons/17679?language=javascript
 
 
 ```javascript
-// 내소스
+// 남의소스
+function solution(m, n, board) {
+    board = board.map(v => v.split(''));
 
+    while (true) {
+        let founded = [];
+
+        // 찾기 - 네 개중 우측 하단 모서리 인덱스 기준
+        for (let i = 1; i < m; i++) {
+            for (let j = 1; j < n; j++) {
+                if (board[i][j] && board[i][j] === board[i][j - 1] && board[i][j] === board[i - 1][j - 1] && board[i][j] === board[i - 1][j]) {
+                    founded.push([i, j]);
+                }
+            }
+        }
+
+        if (! founded.length) 
+          return [].concat(...board).filter(v => ! v).length;
+
+        // 부수기 - 지워질 것 0으로 채우기
+        founded.forEach(a => {
+            board[a[0]][a[1]] = 0;
+            board[a[0]][a[1] - 1] = 0;
+            board[a[0] - 1][a[1] - 1] = 0;
+            board[a[0] - 1][a[1]] = 0;
+        });
+
+        // 재정렬 - ?? 이부분 이해가 안돼..
+        for (let i = m - 1; i > 0; i--) {
+            if (! board[i].some(v => ! v)) continue;
+
+            for (let j = 0; j < n; j++) {
+                for (let k = i - 1; k >= 0 && ! board[i][j]; k--) {
+                    if (board[k][j]) {
+                        board[i][j] = board[k][j];
+                        board[k][j] = 0;
+                        break;
+                    }
+                }
+            }
+        }
+    }
+}
 ```
 
 
@@ -1535,43 +1609,227 @@ function solution(cacheSize, cities) {
 
 
 
-* 
-+ 
+* 후보키
++ https://programmers.co.kr/learn/courses/30/lessons/42890?language=javascript
 
 
 ```javascript
-// 내소스
+// 남의소스
+function solution(relation) {
+    const cols = relation[0].length
+    const rows = relation.length
+    // 4가지의 키라면, 1<<4번 shift하기때문에 16이 나옴. 1~15
+    const sets = 1 << cols
+    const sk = new Set()
 
+	// 키가 4라면 1~15까지 
+    for (let i=1; i<sets; i++) {
+        const tmp = new Set()
+        // row : 레코드 갯수 
+        for (let row=0; row<rows; row++) {
+            let key = ''
+            // cols : 컬럼 갯수
+            for (let col=0; col<cols; col++) {
+            	// 0001 ~ 1111 중 조건에 만족하면 키를 만든다. 
+                if (i & (1 << col)) key = String(key) + String(relation[row][col])
+            }
+            tmp.add(key)
+        }
+        // Set이기 때문에 총갯수가 같으면 sk에 add한다. 
+        if (tmp.size === rows) sk.add(i)
+    }
+
+	// set을 순회한다.
+    for (let i of sk) {
+        for (let j of sk) {
+        	// i는 무조건 j보다 커야한다.
+            if (i >= j) continue;
+            // i&j and연상이 i와 같으면 j를 삭제한다. 
+            if ((i & j) === i) sk.delete(j)
+        }
+    }
+
+	// 어떤키가 유니크인지 출력한다. 
+    // console.log(Array.from(sk).map(e => e.toString(2)))
+
+    return sk.size
+}
 ```
 
 
-
-* 
-+ 
-
-
 ```javascript
-// 내소스
+// 다른소스
+function solution(relation) {
+    const cols = relation[0].length;
 
+    const check = 1 << cols;
+    const answer = new Set();
+
+    for(let i = 1; i < check; i++){
+
+        // relation.map( function(x) { console.log(x); }); // x는 [ 100,"abc","kim"] 같은 배열임
+        // x.filter((col,index)=>i & (1<<index)).join("") ==> col (Data) , idx(0,1,2같은 값들.)
+        let temp = relation.map(x=>x.filter((col,index)=>i & (1<<index)).join(""));
+        const set  = new Set(temp);
+
+        if(temp.length === set.size) answer.add(i);
+    }
+
+    for( let x of answer){
+        for ( let y of answer){
+            if(x >= y) continue;
+            if((x & y) === x) answer.delete(y);
+        }
+    }
+
+	console.log(answer);
+    return answer.size;
+}
 ```
 
 
-* 
-+ 
+* [3차] 방금그곡
++ https://programmers.co.kr/learn/courses/30/lessons/17683?language=javascript
 
 
 ```javascript
-// 내소스
+// 남의소스
+function solution(m, musicinfos) {
+    // [문자+#] 인 항목을 찾아서 소문자로 변환한다. 
+    // ex) CC#BCC#BCC#BCC#B ==> CcBCcBCcBCcB
+   const _m = m.replace(/(\D)#/g, (s,p1)=>p1.toLowerCase());
+   
 
+    const broadcast = musicinfos.map(x=>{
+        // ,를 기준으로 시작시간,끝시간,제목,악보를 분리한다. ex) "03:00,03:30,FOO,CC#B" ==> [ '03:00', '03:30', 'FOO', 'CC#B' ]
+        const info = x.split(",");
+        // 악보를 [문자+#] 인 항목을 찾아서 소문자로 변환한다. 
+        const song = info[3].replace(/(\D)#/g, (s,p1)=>p1.toLowerCase());
+        // 음악제목, 
+        return [info[2],play(toMinute(info[1].split(":"))- toMinute(info[0].split(":")), song)];
+    });
+    const answer = broadcast.reduce((answer, x)=>{
+        // 악보에 _m이 포함되어 있으면,
+        if(x[1].includes(_m)){
+            // answer (0:이름 1:악보 인 배열) 보다 더 긴 악보라면 x로 교체한다. 
+            if(answer.length == 0|| answer[1].length < x[1].length) return x;
+        }
+        return answer;
+    },[]);
+    console.log(answer);
+    return (answer.length == 0)? "(None)" : answer[0];
+}
+
+// 시간계산 
+function toMinute(t){
+    return (t[0]*60) + (t[1]*1);
+}
+
+// song을 time만큼 늘린다. 
+// ex) 30 , 'CcB' => CcBCcBCcBCcBCcBCcBCcBCcBCcBCcB
+// ex) 8, 'CcBCcBCcB' => CcBCcBCc
+function play(time, song){
+    const length = song.length;
+    return song.repeat(time / length) + song.substring(0, time % length);
+}
 ```
 
 
-* 
-+ 
+* N진수 게임
++ https://programmers.co.kr/learn/courses/30/lessons/17687?language=javascript
 
 
 ```javascript
-// 내소스
+// 남의소스
+// 진법 n, 미리 구할 숫자의 갯수 t, 게임에 참가하는 인원 m, 튜브의 순서 p
+function solution(n, t, m, p) {
+  const answer = [];
+  let tmp = [];
+  let i = 1;
+  let num = 0;
+  while (answer.length !== t) {
+    // tmp가 비어 있으면 num을 string으로 변환한다. 
+    if (!tmp.length) {
+      tmp = num.toString(n).split('');
+      num++;
+    }
+    // tmp에서 값을 1개 갖고 온다. ("12" => "1")
+    const nowNum = tmp.shift();
+    // 튜브의 순서라면 push한다. 
+    if (i === p) answer.push(nowNum);
+    i++;
+    // i가 인원보다 크면 1로 수정한다. 
+    if (i > m) i = 1;
+  }
+  return answer.map((v) => v.toUpperCase()).join('');
+}
+
+// console.log(solution(16,16,4,1));
+```
+
+
+* [1차] 추석 트래픽
++ https://programmers.co.kr/learn/courses/30/lessons/17676
+
+
+```javascript
+// 남의소스
+const solution = (lines) => {
+  let answer = 0;
+  const arr = [];
+  const logPointArr = [];
+
+  //1. 로그데이터를 나누고 시작초와 끝초를 새로운 배열에 담는다.
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i].split(" ");
+    const edSec =
+      Number(line[1].substring(0, 2)) * 3600 +
+      Number(line[1].substring(3, 5)) * 60 +
+      Number(line[1].substring(6, 12));
+      
+    const duration = Number(line[2].substring(0, line[2].length - 1));
+    
+    const stSec = edSec - duration + 0.001;
+
+    arr.push([stSec, edSec]);
+    logPointArr.push(stSec, edSec);
+  }
+  
+  //시작초와 끝초를 정렬한다 순서대로 순회하기 위해서..
+  logPointArr.sort();
+  // arr : 시작,끝시간이 저장된 2차원 배열 
+  // logPointArr : 시작,끝시간정보만 저장된 1차원배열
+
+
+  for (let i = 0; i < logPointArr.length; i++) {
+  	// beginRange~endRange는 1초 , 서버의 처리시간이 1초이므로 
+    const beginRange = logPointArr[i];
+    const endRange = logPointArr[i] + 1;
+
+    let count = 0;
+    for (let j = 0; j < arr.length; j++) {
+      const stPoint = arr[j][0];
+      const edPoint = arr[j][1];
+
+      //위 경우는 세가지로 나눌 수 있다 : 1. 시작점이 범위에 포함될때, 2.끝점이 범위에 포함될때,
+      //3.시작점과 끝점사이가 범위에 포함될때
+      if (
+        (stPoint >= beginRange && stPoint < endRange) ||
+        (edPoint >= beginRange && edPoint < endRange) ||
+        (stPoint <= beginRange && edPoint >= endRange)
+      ) {
+        count++;
+      }
+    }
+
+    // count : 1초동안에 처리된 작업수
+
+    if (count > answer) {
+      answer = count;
+    }
+  }
+  return answer;
+};
 
 ```
 
