@@ -107,3 +107,26 @@ function solution(n, computers) {
 }
 ```
 
+
+* 단속카메라
++ https://programmers.co.kr/learn/courses/30/lessons/42884
+
+
+```javascript
+// 남의 소스
+function solution(routes) {
+  let answer = 0;
+  // 정렬을 수행한다. 
+  routes.sort((a, b) => {
+    return a[1] - b[1];
+  });
+  let camera = -30001;
+  for (let i = 0; i < routes.length; i++) {
+    if (camera < routes[i][0]) {
+      answer++;
+      camera = routes[i][1];
+    }
+  }
+  return answer;
+}
+``` 
