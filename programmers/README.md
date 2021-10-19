@@ -59,7 +59,43 @@ function solution(board, moves) {
   
     return answer;
 }
+
 ```
++ 내소스 (개선된 버젼 2021-10-19)
+```javascript
+function solution(board, moves) {
+    var answer = 0;
+    var arr = Array();
+    // board안에 pickup함수를 만들었다. 
+    board.pickup = function(idx) {
+        for(let i=0;i<board.length;i++) {
+            if(this[i][idx]>0) {
+                let tmp = this[i][idx];
+                this[i][idx] = 0;
+                return tmp;
+            }
+        }
+        return 0;
+    }
+
+	moves.forEach(function(item) {
+		item--;
+        let data = board.pickup(item);
+        if(data)  {
+            if(arr.length && arr[arr.length-1] == data) {
+                arr.pop();
+                answer += 2;
+            }
+            else 
+                arr.push(data);
+        }
+	});
+    return answer;    
+  
+}
+
+```
+
 
 + 다른 사람 소스 
 ```javascript
