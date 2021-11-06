@@ -1588,3 +1588,63 @@ function solution(dartResult) {
 ***
    
 
+
+
+* 숫자 문자열과 영단어
++ https://programmers.co.kr/learn/courses/30/lessons/81301?language=javascript
+
+
+```javascript
+// 내소스
+function solution(s) {
+    var answer = 0;
+    var arr = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"];
+    arr.forEach( function(d,i) { s = s.replace(new RegExp(d,"gi"),""+i); });
+    return parseInt(s);
+}
+```
+
+
+
+
+* 음양 더하기
++ https://programmers.co.kr/learn/courses/30/lessons/76501?language=javascript
+
+
+```javascript
+// 내소스
+function solution(absolutes, signs) {
+    var answer = 0;
+    absolutes.forEach( (d,i) => { 
+        answer += (signs[i]?d:-d);
+    });
+    return answer;
+}
+```
+
+
+
+
+* 없는 숫자 더하기
++ https://programmers.co.kr/learn/courses/30/lessons/86051?language=javascript
+
+
+```javascript
+// 내소스
+function solution(numbers) {
+    var answer = 0;
+    for(let i=1;i<10;i++) {
+        if(numbers.indexOf(i) == -1) answer += i;
+    }
+    return answer;
+}
+```
+
+
+
+
+   
+***
+***
+   
+

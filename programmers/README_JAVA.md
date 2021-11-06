@@ -1,3 +1,36 @@
+* 숫자 문자열과 영단어 : <https://programmers.co.kr/learn/courses/30/lessons/81301?language=java>
+   
++ 내소스
+```java
+import java.util.Arrays;
+import java.util.List;
+class Solution {
+    public int solution(String s) {
+        String str="";
+        List<String> arr_str = Arrays.asList("zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine");
+        // String[] arr_str = {"zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"};
+        
+        String tmp="";
+        for(int i=0;i<s.length();i++) {
+            char c = s.charAt(i);           
+            if(Character.isDigit(c) == true) 
+                str += c;
+            else {
+                tmp += c;  // one
+                // int idx = Arrays.asList(arr_str).indexOf(tmp);
+                int idx = arr_str.indexOf(tmp);
+                if(idx>=0) {
+                    str += idx;
+                    tmp="";                
+                }                
+            }
+            
+        }
+        return Integer.parseInt(str);
+    }
+}
+```
+
 
 * 크레인 인형뽑기 게임 : <https://programmers.co.kr/learn/courses/30/lessons/64061>
    
@@ -87,3 +120,59 @@ class Solution {
     }
 }
 ```
+
+
+
+
+
+* 없는 숫자 더하기
++ https://programmers.co.kr/learn/courses/30/lessons/86051?language=java
+
+
++ 내소스
+```java
+class Solution {
+    public int solution(int[] numbers) {
+        int answer = 0;
+        for(int d:numbers) answer += d;
+        return 45-answer;
+    }
+}
+```
+
+
+
+* 음양 더하기
++ https://programmers.co.kr/learn/courses/30/lessons/86051?language=java
+
+
++ 내소스
+```java
+class Solution {
+    public int solution(int[] absolutes, boolean[] signs) {
+        int answer = 0;
+        for(int i=0;i<absolutes.length;i++)
+            answer += signs[i]?absolutes[i]:-absolutes[i];
+        return answer;
+    }
+}
+```
+
+
+
+* 내적
++ https://programmers.co.kr/learn/courses/30/lessons/70128?language=java
+
+
++ 내소스
+```java
+class Solution {
+    public int solution(int[] a, int[] b) {
+        int answer = 0;
+        for(int i=0;i<a.length;i++)
+            answer += a[i] * b[i];
+        return answer;
+    }
+}
+```
+
