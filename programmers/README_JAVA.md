@@ -176,3 +176,92 @@ class Solution {
 }
 ```
 
+
+
+* K번째수
++ https://programmers.co.kr/learn/courses/30/lessons/42748
+
+
++ 내소스
+```java
+public class KstNumber {
+    public int[] solution(int[] array, int[][] commands) {
+        int[] answer = new int[commands.length];
+        int idx =0;
+        for(int i=0;i<commands.length;i++) {
+            int[] arr = commands[i];
+            int[] tmp = Arrays.copyOfRange(array,arr[0]-1,arr[1]);
+            Arrays.sort(tmp);            
+            answer[idx++] = tmp[arr[2]-1];
+        }
+        return answer;
+    }
+}
+```
+
+
+
+* 완주하지 못한 선수
++ https://programmers.co.kr/learn/courses/30/lessons/42576
+
+
++ 내소스
+```java
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+
+public class UnfinishedPlayer {
+    public String solution(String[] participant, String[] completion) {
+        String answer = "";
+        Map<String,Integer> map1 = new HashMap<>();
+        for(String d:participant) {
+            if(map1.get(d) == null)
+                map1.put(d,1);
+            else
+                map1.put(d,map1.get(d)+1);
+        }
+        for(String d:completion) {   
+            map1.put(d,map1.get(d)+1);            
+        }
+
+        Iterator<String> mapIter = map1.keySet().iterator();
+        while(mapIter.hasNext()){
+            String key = mapIter.next();
+            int value = map1.get( key );
+            if(value % 2 == 1) return key;
+        }
+
+        return answer;
+    }
+}
+```
+
+
+
+* 소수만들기
++ https://programmers.co.kr/learn/courses/30/lessons/12977
+
+
++ 내소스
+```java
+public class MakePrimeNumber {
+    public boolean isPrime(int num) {
+        for(int i=2;i<num;i++)
+            if(num%i == 0) return false;
+        return true;
+    }
+
+    public int solution(int[] nums) {
+        int answer = 0;
+
+        for(int i=0;i<nums.length;i++) 
+            for(int j=i+1;j<nums.length;j++)
+                for(int k=j+1;k<nums.length;k++) 
+                    if(isPrime(nums[i]+nums[j]+nums[k])) answer++;
+
+        return answer;
+    }
+}
+```
+
