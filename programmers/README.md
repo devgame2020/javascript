@@ -1701,3 +1701,21 @@ function solution(nums) {
 ***
    
 
+
+
+* 폰켓몬
++ https://programmers.co.kr/learn/courses/30/lessons/1845
+
+
+```javascript
+// 내소스
+function solution(nums) {
+    var answer = 0;
+    var cnt = parseInt(nums.length/2);
+    var set = new Set(nums);
+    if(cnt<set.size) answer=cnt;
+    else answer = set.size;
+    return answer;
+}
+```
+

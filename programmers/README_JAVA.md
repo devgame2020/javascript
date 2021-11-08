@@ -265,3 +265,107 @@ public class MakePrimeNumber {
 }
 ```
 
+
+
+
+* 모의고사
++ https://programmers.co.kr/learn/courses/30/lessons/42840?language=java#
+
+
++ 내소스
+```java
+import java.util.ArrayList;
+
+class Solution { 
+    public int[] solution(int[] answers) {
+        int[][] arr = {{},{1,2,3,4,5},{2,1,2,3,2,4,2,5},{3,3,1,1,2,2,4,4,5,5}};
+        int[] jumsu = { 0,0,0,0 };
+        
+        for(int idx=0;idx<answers.length;idx++) {
+        	for(int i=1;i<=3;i++) {
+        		if(answers[idx] == arr[i][idx%arr[i].length])
+                    
+					jumsu[i]++;
+        	}
+        }  
+      
+        int max = Math.max(jumsu[1], Math.max(jumsu[2],jumsu[3]));
+        
+        int cnt = 0;
+        for(int i=1;i<=3;i++)  {
+            if(max == jumsu[i]) cnt++;
+        }        
+        
+        int idx = 0;
+        int[] answer = new int[cnt];
+        for(int i=1;i<=3;i++) 
+        	if(max == jumsu[i])
+        		answer[idx++] = i;
+
+       return answer;   
+    }
+}
+```
+
+
+
+
+* 체육복
++ https://programmers.co.kr/learn/courses/30/lessons/42862?language=java
+
+
++ 내소스
+```java
+import java.util.Arrays;
+class Solution {
+    public int solution(int n, int[] lost, int[] reserve) {
+        int answer = 0;
+        int[] arr = new int[n];
+        Arrays.fill(arr, 1);
+        
+        for(int d:reserve) arr[d-1]++;
+        for(int d:lost) arr[d-1]--;
+        for(int i=0;i<arr.length;i++) {
+        	if(arr[i] == 0) {
+        		if(i>0 && arr[i-1]>1) answer++;
+        		else if(i<arr.length-1 && arr[i+1]>1) { 
+        			answer++;
+        			arr[i+1]--;
+        		}
+        	}
+        	else 
+        		answer++;
+        }
+        
+        return answer;
+    }
+}
+```
+
+
+
+
+
+
+* 폰켓몬
++ https://programmers.co.kr/learn/courses/30/lessons/1845?language=java
+
+
++ 내소스
+```java
+import java.util.HashSet;
+import java.util.Set;
+
+class Solution {
+    public int solution(int[] nums) {
+        int answer = 0;      
+        int cnt = nums.length/2;
+        Set<Integer> set = new HashSet<>();
+        for(int d:nums) set.add(d);
+        if(cnt<set.size()) answer = cnt;
+        else answer = set.size();
+        return answer;
+    }
+}
+```
+
