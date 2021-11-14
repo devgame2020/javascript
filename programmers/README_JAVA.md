@@ -369,3 +369,126 @@ class Solution {
 }
 ```
 
+
+
+
+
+* 실패율
++ https://programmers.co.kr/learn/courses/30/lessons/42889?language=java
+
+
++ 내소스
+```java
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
+class Node {
+    public int no;
+    public float fail;
+    
+    Node(int i,float f) {
+        no = i;
+        fail = f;
+    }
+}
+
+class NodeCompare implements Comparator<Node> {
+	
+	public int compare(Node a, Node b) {
+		if(a.fail < b.fail)
+			return 1;
+		else if(a.fail > b.fail)
+			return -1;
+		return 0;
+	}
+}
+
+class Solution {
+    public int[] solution(int N, int[] stages) {
+        List<Node> fail = new ArrayList<Node>();
+        int cnt = stages.length;
+        int[] answer = new int[N];
+        int[] arr = new int[N+2];
+        Arrays.fill(arr, 0);   
+        for(int d:stages) arr[d]++;
+        for(int i=1;i<=N;i++) {
+            fail.add(new Node(i,(float)arr[i]/cnt));
+            cnt -= arr[i];
+        }
+        
+        Collections.sort(fail, new NodeCompare());        
+        int i=0;
+        for(Node d:fail) {
+        	answer[i++] = d.no;
+        }
+        
+        return answer;
+    }
+}
+```
+
+
+
+
+
+* 약수의 개수와 덧셈
++ https://programmers.co.kr/learn/courses/30/lessons/77884?language=java
+
+
++ 내소스
+```java
+class Solution {
+    public int solution(int left, int right) {
+        int answer = 0;
+        for(int i=left;i<=right;i++) {
+            int cnt = 1;
+            for(int j=1;j<=i/2;j++) {
+                if(i%j == 0) cnt++;
+            }
+            answer += cnt%2==0?i:-i;
+        }        
+        return answer;
+    }
+}
+```
+
+
+* 3진법 뒤집기
++ https://programmers.co.kr/learn/courses/30/lessons/68935?language=java
+
+
++ 내소스
+```java
+class Solution {
+    public int solution(int n) {
+        int answer = 0;
+        StringBuffer str = new StringBuffer();
+        while(n>0) {
+        	str.append(""+n%3);
+            n /= 3;
+        }
+        answer = Integer.parseInt(str.toString(),3);
+        return answer;
+    }
+}
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

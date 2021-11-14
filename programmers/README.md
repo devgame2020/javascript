@@ -261,7 +261,7 @@ function solution(answers) {
     
     return answer;
 }
-```
+``` 
 
 
 ```javascript
@@ -1437,6 +1437,23 @@ function solution(N, stages) {
 ```
 
 
+```javascript
+// 내소스(2021-11-14)
+function solution(N, stages) {
+    var answer = [];   
+    var cnt = stages.length;
+    var arr = Array.from({length:N+2},() =>0);
+    stages.forEach( (d) => { arr[d]++; });    
+    var fail = [];
+    for(let i=1;i<=N;i++) {
+        fail[i] = { 'no':i, 'f':arr[i]/cnt };
+        cnt -= arr[i];
+    }    
+    fail.sort( (a,b) => { return b.f-a.f }).forEach( (d) => { answer.push(d.no) });  
+    return answer;
+}
+```
+
 
 
 
@@ -1715,6 +1732,28 @@ function solution(nums) {
     var set = new Set(nums);
     if(cnt<set.size) answer=cnt;
     else answer = set.size;
+    return answer;
+}
+```
+
+
+
+
+* 약수의 개수와 덧셈
++ https://programmers.co.kr/learn/courses/30/lessons/77884?language=javascript
+
+
+```javascript
+// 내소스
+function solution(left, right) {
+    var answer = 0;
+    for(let i=left;i<=right;i++) {
+        let cnt = 1;
+        for(let j=1;j<=i/2;j++) {
+            if(i%j == 0) cnt++;
+        }
+        answer += (cnt%2==0?i:-i); 
+    }
     return answer;
 }
 ```
