@@ -13,6 +13,11 @@ function solution(s) {
     else answer = s.substring(mid-1,mid+1);
     return answer;
 }
+
+// 개선된 소스
+function solution(s) {
+    return s.substr((s.length-1)/2,2-s.length%2);
+}
 ```
 
 + 다른 사람소스
@@ -1392,6 +1397,30 @@ function solution(d, budget) {
 // 내소스
 function solution(n, arr1, arr2) {  
     var answer = [];
+    var arr3 = [];
+    for(let i=0;i<arr1.length;i++) {
+        arr3.push(arr1[i] | arr2[i]);
+    }
+    
+    arr3.forEach( (d) => {
+        let str = '';
+        for(let i=n-1;i>=0;i--) {
+            let x = 1 << i;
+            
+            if((d & x) > 0) str += '#';
+            else {
+                 str += ' ';
+            }
+        }
+        answer.push(str);
+    });
+   
+    return answer;
+}
+
+// 개선된 소스 
+function solution(n, arr1, arr2) {  
+    var answer = [];
     for(var i=0;i<n;i++) {
         var x = (arr1[i] | arr2[i]).toString(2);
         answer.push(" ".repeat(n-x.length) + x.replace(/0/g," ").replace(/1/g,"#"));
@@ -1399,6 +1428,10 @@ function solution(n, arr1, arr2) {
     return answer;
 }
 ```
+
+
+
+
 
 ```javascript
 // 다른사람 소스
@@ -1600,6 +1633,106 @@ function solution(dartResult) {
 }
 ```
 
+
+```javascript
+// 클래스를 사용한 소스(2021-12-05)
+class Solution {
+    public static int solution(String dartResult) {
+       int answer = 0;
+
+    	Dart[] dart = new Dart[4];
+    	Dart tmp = new Dart();
+    	int i = 0;
+    	for(String d:dartResult.split("")) {
+    		if(Character.isDigit(d.charAt(0))) {
+    			if(tmp.isFinData()) {
+                    System.out.println(i);
+    				dart[i++] = new Dart(tmp);
+    				tmp.init();    				
+    			}
+    			tmp.addJumsu(d);
+    		}
+    		else {
+    			if(d.compareTo("S") == 0 || d.compareTo("D") == 0 || d.compareTo("T") == 0)
+    				tmp.setDoubleJumsu(d);
+    			else if(d.compareTo("*") == 0)
+    				tmp.setStar(2);
+    			else if(d.compareTo("#") == 0)
+    				tmp.setMinus(-1);
+    		}
+    	} 
+                    System.out.println(i);
+    	dart[i] = new Dart(tmp);
+    	
+    	for(int j=2;j>=0;j--) {
+    		answer += (dart[j].getJumsu() * (j<2?dart[j+1].getStar():1));
+    	}
+    	
+        
+        return answer;
+    }
+}
+
+class Dart {
+	private String jumsu = "";
+	private String d = "";
+	private int star = 1;
+	private int m = 1;
+	
+	public int getStar() {
+		return star;
+	}
+	
+	public boolean isFinData() {
+		if(d.length()>0) return true;
+		return false;
+	}
+	
+	public void addJumsu(String str) {
+		jumsu += str;
+	}
+	
+	public void setDoubleJumsu(String str) {
+		d = str;
+	}
+	
+	public void setStar(int star) {
+		this.star = star;
+	}
+	
+	public void setMinus(int m) {
+		this.m = m;
+	}	
+	
+	public void init() {
+		jumsu = "";
+		d = "";
+		star = 1;
+		m = 1;
+	}
+	
+	public int getJumsu() {
+		int doubleScore = 1;
+		if(d.compareTo("D") == 0) doubleScore = 2;
+		else if(d.compareTo("T") ==0) doubleScore = 3;
+		
+		int score = Integer.parseInt(jumsu);
+		return (int)Math.pow(score, doubleScore) * star * m;
+	}
+	Dart() {
+		init();
+	}
+	Dart(Dart dart) {
+		this.jumsu = dart.jumsu;
+		this.d = dart.d;
+		this.star = dart.star;
+		this.m = dart.m;
+	}
+}
+```
+
+
+
    
 ***
 ***
@@ -1758,3 +1891,83 @@ function solution(left, right) {
 }
 ```
 
+
+* 프로그래머스 Level 1,최소직사각형
++ https://programmers.co.kr/learn/courses/30/lessons/86491
+
+
+```javascript
+// 내소스
+function solution(sizes) {
+    var func = { };
+    func.sz = 1000000;    
+    var arrx = [];
+    var arry = [];
+    sizes.forEach( (d) => {
+        arrx.push(Math.max(d[0],d[1]));
+        arry.push(Math.min(d[0],d[1]));
+    });
+    
+    return Math.max(...arrx) * Math.max(...arry);
+}
+```
+
+
+```javascript
+// 다른사람소스
+function solution(sizes) {
+  const cards = [];
+  for (let [w, h] of sizes) {
+    const card = new NameCard(w, h);
+    cards.push(card);
+  }
+  const w = Math.max(...cards.map(x => x.max()));
+  const h = Math.max(...cards.map(x => x.min()));
+  return w * h;
+}
+
+class NameCard {
+  constructor(w, h) {
+    this.w = w;
+    this.h = h;
+  }
+
+  max() {
+    return Math.max(this.w, this.h);
+  }
+
+  min() {
+    return Math.min(this.w, this.h);
+  }
+}
+
+console.log(solution([[60, 50], [30, 70], [60, 30], [80, 40]]));
+```
+
+
+
+
+
+* 프로그래머스 Level 1,나머지가 1이 되는 수 찾기
++ https://programmers.co.kr/learn/courses/30/lessons/87389
+
+
+```javascript
+// 내소스
+function solution(n) {
+    for(let i=2;i<=n;i++) 
+        if((n-1)%i == 0) return i;
+}
+```
+
+* 프로그래머스 Level 1,부족한 금액 계산하기
++ https://programmers.co.kr/learn/courses/30/lessons/82612?language=javascript
+
+
+```javascript
+// 내소스
+function solution(n) {
+    for(let i=2;i<=n;i++) 
+        if((n-1)%i == 0) return i;
+}
+```

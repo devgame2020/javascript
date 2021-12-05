@@ -395,7 +395,7 @@ class Node {
         fail = f;
     }
 }
-
+ 
 class NodeCompare implements Comparator<Node> {
 	
 	public int compare(Node a, Node b) {
@@ -478,7 +478,207 @@ class Solution {
 ```
 
 
+* 프로그래머스 Level 1,최소직사각형
++ https://programmers.co.kr/learn/courses/30/lessons/86491
 
+
+
++ 내소스
+```java
+// 프로그래머스 Level 1,최소직사각형
+public class minimumrectangle {
+    public int solution(int[][] sizes) {
+        int x=0,y=0;
+        for(int []d:sizes) {
+            if(d[0]>d[1]) {
+                x = Math.max(x, d[0]);
+                y = Math.max(y, d[1]);
+            }
+            else {
+                x = Math.max(x, d[1]);
+                y = Math.max(y, d[0]);
+            }
+        }
+        return x*y;
+    }
+}
+```
+
+
+* 프로그래머스 Level 1,나머지가 1이 되는 수 찾기
++ https://programmers.co.kr/learn/courses/30/lessons/87389?language=java
+
+
+
++ 내소스
+```java
+class Solution {
+    public int solution(int n) {
+        int answer = 0;
+        for(int i=2;i<=n;i++)
+            if((n-1)%i == 0) return i;
+        return answer;
+    }
+}
+```
+
+
+
+
+* 프로그래머스 Level 1,부족한 금액 계산하기
++ https://programmers.co.kr/learn/courses/30/lessons/82612
+
+
+```javascript
+// 내소스
+class Solution {
+    public long solution(int price, int money, int count) {
+        long sum = (long)price*((count+1)*(count/2)+(count+1)/2*(count%2));
+        return sum>money?sum-money:0;
+    }
+}
+```
+
+
+
+
+
+* 프로그래머스 Level 1,[1차] 비밀지도
++ https://programmers.co.kr/learn/courses/30/lessons/17681?language=java
+
+
+```javascript
+// 내소스
+class Solution {
+    public String[] solution(int n, int[] arr1, int[] arr2) {
+        String[] answer = new String[n];
+        for(int i=0;i<n;i++) {
+            int d = arr1[i] | arr2[i];
+            String str = Integer.toBinaryString(d).replaceAll("1","#").replaceAll("0"," ");
+            answer[i] = " ".repeat(n-str.length()) + str;
+        }
+        return answer;
+    }
+}
+```
+
+
+
+* 프로그래머스 Level 1,가운데 글자 가져오기
++ https://programmers.co.kr/learn/courses/30/lessons/12903
+
+
+```javascript
+// 내소스
+class Solution {
+    public String solution(String s) {
+        return s.substring((s.length()-1)/2, (s.length()-1)/2 + 2 - s.length()%2);
+    }
+}
+```
+
+
+
+* 프로그래머스 Level 1,[1차] 다트 게임
++ https://programmers.co.kr/learn/courses/30/lessons/17682
+
+
+```javascript
+// 내소스
+class Solution {
+    public static int solution(String dartResult) {
+       int answer = 0;
+
+    	Dart[] dart = new Dart[4];
+    	Dart tmp = new Dart();
+    	int i = 0;
+    	for(String d:dartResult.split("")) {
+    		if(Character.isDigit(d.charAt(0))) {
+    			if(tmp.isFinData()) {
+                    System.out.println(i);
+    				dart[i++] = new Dart(tmp);
+    				tmp.init();    				
+    			}
+    			tmp.addJumsu(d);
+    		}
+    		else {
+    			if(d.compareTo("S") == 0 || d.compareTo("D") == 0 || d.compareTo("T") == 0)
+    				tmp.setDoubleJumsu(d);
+    			else if(d.compareTo("*") == 0)
+    				tmp.setStar(2);
+    			else if(d.compareTo("#") == 0)
+    				tmp.setMinus(-1);
+    		}
+    	} 
+                    System.out.println(i);
+    	dart[i] = new Dart(tmp);
+    	
+    	for(int j=2;j>=0;j--) {
+    		answer += (dart[j].getJumsu() * (j<2?dart[j+1].getStar():1));
+    	}
+    	
+        
+        return answer;
+    }
+}
+
+class Dart {
+	String jumsu = "";
+	String d = "";
+	int star = 1;
+	int m = 1;
+	
+	public int getStar() {
+		return star;
+	}
+	
+	public boolean isFinData() {
+		if(d.length()>0) return true;
+		return false;
+	}
+	
+	public void addJumsu(String str) {
+		jumsu += str;
+	}
+	
+	public void setDoubleJumsu(String str) {
+		d = str;
+	}
+	
+	public void setStar(int star) {
+		this.star = star;
+	}
+	
+	public void setMinus(int m) {
+		this.m = m;
+	}	
+	
+	public void init() {
+		jumsu = "";
+		d = "";
+		star = 1;
+		m = 1;
+	}
+	
+	public int getJumsu() {
+		int doubleScore = 1;
+		if(d.compareTo("D") == 0) doubleScore = 2;
+		else if(d.compareTo("T") ==0) doubleScore = 3;
+		
+		int score = Integer.parseInt(jumsu);
+		return (int)Math.pow(score, doubleScore) * star * m;
+	}
+	Dart() {
+		init();
+	}
+	Dart(Dart dart) {
+		this.jumsu = dart.jumsu;
+		this.d = dart.d;
+		this.star = dart.star;
+		this.m = dart.m;
+	}
+}
+```
 
 
 
