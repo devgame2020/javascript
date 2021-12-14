@@ -528,6 +528,16 @@ function solution(arr, divisor) {
 }
 ```
 
+```javascript
+// 2021-12-14
+function solution(arr, divisor) {
+    var answer = [];
+    answer = arr.filter( (d) => { return (d%divisor == 0); }).sort( (a,b) => { return a-b;}  );
+    if(answer.length==0) answer.push(-1);
+    return answer;
+}
+```
+
 
    
 ***
@@ -543,6 +553,14 @@ function solution(a, b) {
     var answer = 0;    
     for(var i=(a<b?a:b);i<=(b>a?b:a);i++) answer += i;
     return answer;
+}
+```
+
+
+```javascript
+// 내소스 (가우스공식사용) 2012.12.14
+function solution(a, b) {
+    return (a+b)*(Math.abs(a-b)+1)/2;
 }
 ```
 
@@ -1438,6 +1456,19 @@ function solution(n, arr1, arr2) {
 function solution(n, arr1, arr2) {  
     return arr1.map((i, index) =>('0'.repeat(n) + (i | arr2[index]).toString(2)).slice(-n)).map(i => i.replace(/0/g, ' ').replace(/1/g, '#'));
 }
+
+
+const solution = (n, arr1, arr2) => {
+    const answer = [];
+    arr1.forEach((el, index) => {
+        answer.push(
+            (el | arr2[index])
+            .toString(2)
+            .padStart(n, "0")
+            .replace(/[1|0]/g, a =>  +a? "#": " "));
+    });
+    return answer;
+};
 ```
 
 

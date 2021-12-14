@@ -583,7 +583,7 @@ class Solution {
 + https://programmers.co.kr/learn/courses/30/lessons/17682
 
 
-```javascript
+```java
 // 내소스
 class Solution {
     public static int solution(String dartResult) {
@@ -680,6 +680,78 @@ class Dart {
 }
 ```
 
+
+
+* 같은 숫자는 싫어
++ https://programmers.co.kr/learn/courses/30/lessons/12906
+
+```java
+import java.util.Arrays;
+import java.util.Stack;
+
+//프로그래머스 Level 1,같은 숫자는 싫어
+public class EqualNumberNo {
+    public int[] solution(int []arr) {
+        Stack<Integer> stack = new Stack<>();
+        
+        for(int i=0;i<arr.length-1;i++) {
+            if(arr[i] != arr[i+1])
+                stack.push(arr[i]);
+        }
+        stack.push(arr[arr.length-1]);        
+        return Arrays.stream(stack.toArray(new Integer[stack.size()])).mapToInt(Integer::intValue).toArray();
+    }
+}
+```
+
+   
+***
+   
+
+* 나누어 떨어지는 숫자 배열
++ https://programmers.co.kr/learn/courses/30/lessons/12910?language
+
+```java
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+public class DivideNumberArray {
+    public int[] solution(int[] arr, int divisor) {
+        int[] answer = {-1};
+        List<Integer> list = new ArrayList<Integer>();
+        for(int d:arr) {
+            if(d%divisor == 0) {
+                list.add(d);
+            }                
+        }        
+        
+        if(list.size() == 0) return answer;
+        answer = list.stream().mapToInt(Integer::intValue).toArray();
+        Arrays.sort(answer);
+        return answer;
+    }
+}
+
+```
+
+
+   
+***
+***
+   
+
+* 두 정수 사이의 합
++ https://programmers.co.kr/learn/courses/30/lessons/12912?language=javascript
+
+```java
+public class TwoNumberSum {
+    public long solution(int a, int b) {
+        return (a+b)*(Math.abs(a-b)+1)/2;
+    }
+}
+
+```
 
 
 
