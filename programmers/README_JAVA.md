@@ -757,6 +757,93 @@ public class TwoNumberSum {
 
 
 
+* 문자열 내 마음대로 정렬하기
++ https://programmers.co.kr/learn/courses/30/lessons/12915?language=java
+
+
++ 내소스
+```java
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
+class SortCompare  implements Comparator<String> {
+    public int idx;
+    SortCompare(int i) { idx = i; }
+    public int compare(String a, String b) {
+        if(a.charAt(idx) == b.charAt(idx)) {
+            return a.compareTo(b);
+        }
+        return Integer.compare(a.charAt(idx),b.charAt(idx));
+    }
+}
+
+
+class Solution {
+    public String[] solution(String[] strings, int n) {
+        List<String> list = Arrays.asList(strings);
+        Collections.sort(list, new SortCompare(n));
+        return list.toArray(new String[list.size()]);
+    }
+}
+```
+
+
+
+
+* 문자열 내 p와 y의 개수
++ https://programmers.co.kr/learn/courses/30/lessons/12916?language=java
+
+
++ 내소스
+```java
+class Solution {
+    boolean solution(String s) {
+        if( s.replaceAll("[^pP]","").length() == s.replaceAll("[^yY]","").length() ) return true;
+        return false;
+    }
+}
+```
+
+
+
+
+* 문자열 내림차순으로 배치하기
++ https://programmers.co.kr/learn/courses/30/lessons/12917?language=java
+
+
++ 내소스
+```java
+class Solution {
+    public String solution(String s) {
+        String[] array = s.split("");
+        Arrays.sort(array,Collections.reverseOrder());
+        return String.join("",array);
+    }	
+}
+```
+
++ 다른사람소스(준규님)
+```java
+class Solution {
+  public String solution(String s) {
+    int[] numbers = s
+      .chars()
+      .map(i -> -i)
+      .sorted()
+      .map(i -> -i)
+      .toArray();
+    return new String(numbers, 0, numbers.length);
+  }	
+}
+```
+
+
+
+
+
+
 
 
 

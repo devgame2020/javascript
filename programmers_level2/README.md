@@ -1843,13 +1843,64 @@ const solution = (lines) => {
 
 
 
-* 
-+ 
+* 행렬 테두리 회전하기
++ https://programmers.co.kr/learn/courses/30/lessons/77485
 
 
 ```javascript
-// 내소스
+// 내소스 2021.12.24
+function solution(rows, columns, queries) {
+    var answer = [];
+    var arr = [];
+    for(let i=0;i<rows*columns;i++) {
+        // console.log(i + ":" + parseInt(i/columns) + ":"+i%columns);
+        let x = parseInt(i/columns);
+        let y = i%columns;
+        if(y==0) arr[x] = [];
+        arr[x][y] = i+1;
+    }
+    
+    queries.forEach( (d) => {
+        let y1 = d[0]-1;  // 5
+        let x1 = d[1]-1;  // 1
+        let y2 = d[2]-1;  // 6
+        let x2 = d[3]-1;  // 3 
+  
+        
+        let i,tmp;
+        let prev = arr[y1][x1];
+        let min = prev;
+        for(i=x1+1;i<=x2;i++) {
+            tmp = arr[y1][i];
+            arr[y1][i] = prev;
+            min = Math.min(min,prev);
+            prev =tmp;
+        }
+        for(i=y1+1;i<=y2;i++) {
+            tmp = arr[i][x2];
+            arr[i][x2] = prev;
+            min = Math.min(min,prev);
+            prev =tmp;           
+        }
+        for(i=x2-1;i>=x1;i--) {
+            tmp = arr[y2][i];
+            arr[y2][i] = prev;            
+            min = Math.min(min,prev);
+            prev =tmp;
+        }
+        for(i=y2-1;i>=y1;i--) {
+            tmp = arr[i][x1];
+            arr[i][x1] = prev;
+            min = Math.min(min,prev);
+            prev =tmp
+        }
+        
+        answer.push(min);
+        
+    });
 
+    return answer;
+}
 ```
 
 

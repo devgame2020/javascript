@@ -589,6 +589,33 @@ function solution(strings, n) {
 }
 ```
 
+```javascript
+// 내소스 2021-12-19
+function solution(strings, n) {
+    var answer = [];
+    answer = strings.sort( (a,b) => {        
+        if(a[n] == b[n])             
+            return a==b?0:a>b?1:-1;
+        else 
+            return a[n]==b[n]?0:a[n]>b[n]?1:-1;
+    });
+    return answer;
+}
+```
+
+```javascript
+// 내소스 - 개선된 버젼(localeCompare사용) 2021-12-19
+function solution(strings, n) {
+    var answer = [];
+    answer = strings.sort( (a,b) => {        
+        if(a[n] == b[n])  
+            return a.localeCompare(b);
+        else 
+            return a[n].localeCompare(b[n]);
+    });
+    return answer;
+}
+```
 
 ```javascript
 // 다른사람소스
@@ -628,6 +655,20 @@ function solution(s){
 }
 ```
 
+
+```javascript
+// 내소스 2021.12.19
+function solution(s){
+    var answer = 0;
+
+    [...s.toLowerCase()].forEach( (d) => {
+        if(d=='p') answer++;
+        if(d=='y') answer--;    
+    });
+
+    return answer==0?true:false;
+}
+```
 
 ```javascript
 // 다른 사람 소스
@@ -674,6 +715,17 @@ function solution(s) {
     
 //    answer = [...s].sort().reverse().join('');
     return answer;
+}
+```
+
+```javascript
+// 2021.12.19
+function solution(s) {
+    return [...s].sort( (a,b) => {
+        if(a == b) return 0;
+        if(a>b) return -1;
+        return 1;
+    }).join('');
 }
 ```
 
