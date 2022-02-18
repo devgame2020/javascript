@@ -158,6 +158,19 @@ console.log(a);
     }
 ```    
 
+* 두수의 최대 공배수를 구하기
+(다른방법 : 두수를 곱한값 / 최대공약수)
+```javascript
+    function lcm(w,h) {
+        let x = 0;
+        while(true) {
+            if(x%w == 0 && x%h==0) break;
+            x++;
+        }
+        return x;
+    }
+```    
+
 
 
 

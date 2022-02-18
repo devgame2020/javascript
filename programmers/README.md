@@ -776,7 +776,13 @@ function solution(s) {
 }
 ```
 
-
+```javascript
+// 2021-12-27
+// + - . 등등의 값은 숫자로 인정하지 않음
+function solution(s) {
+    return (s.length == 4 || s.length == 6) && [...s].every( (d) => { return d>='0' && d<='9' }) ;
+}
+```
 
 
 
@@ -838,6 +844,25 @@ function solution(n) {
 }
 ```
 
+```javascript
+// 2021-12-27
+// 에라토스테네스의체를 이용하였다.
+function solution(n) {
+    let arr = [ ];    
+    for(let i=2;i<=n;i++) {
+        if(arr[i] == 0) continue;
+        arr[i] = 1
+        for(let j=2;i*j<=n;j++) {
+            arr[i*j] = 0;            
+        }
+    }
+    return arr.reduce( (a,d) => { return a+d; });
+}
+```
+
+
+
+
 * 수박수박수박수박수박수?
 + https://programmers.co.kr/learn/courses/30/lessons/12922?language=javascript
 
@@ -852,6 +877,15 @@ function solution(n) {
 
 
 
+```javascript
+// 내소스 2021-12-31
+function solution(n) {
+    var arr = ["수", "박"];
+    var answer = '';
+    for(let i=0;i<n;i++) answer += arr[i%2];
+    return answer;
+}
+```
    
 ***
 ***
@@ -912,6 +946,23 @@ function solution(s, n) {
 }
 ```
 
+
+```javascript
+// 내소스 2021-12-31
+function solution(s, n) {
+    return [...s].map( (d) => {
+        let x = d.charCodeAt(0);
+        if(x>=65 && x <=90) {
+            x = (x-65+n)%26 + 65;
+        } else if (x>=97 && x<=122) {
+            x = (x-97+n)%26 + 97;            
+        }                
+        return String.fromCharCode(x);
+    }).join("");
+}
+```
+
+
 * 약수의 합
 + https://programmers.co.kr/learn/courses/30/lessons/12928?language=javascript
 
@@ -926,6 +977,16 @@ function solution(n) {
 }
 ```
 
+
+```javascript
+// 내소스, 2022-01-12
+function solution(n) {
+    let answer = n;
+    for(let i=1;i<n;i++)
+        if(n%i == 0) answer += i;
+    return answer;
+}
+```
 
    
 ***
@@ -973,6 +1034,15 @@ function solution(s) {
 }
 ```
 
+```javascript
+// 내소스 2022-01-12
+function solution(s) {
+    return s.split(" ").map( (data) => [...data].map( (d,i) => i%2==0?d.toUpperCase():d.toLowerCase()).join("") ).join(" ");
+}
+```
+
+
+
 
 * 자릿수 더하기
 + https://programmers.co.kr/learn/courses/30/lessons/12931?language=javascript
@@ -990,6 +1060,16 @@ function solution(n)
 }
 ```
 
+```javascript
+// 내소스,2022-01-12
+function solution(n)
+{
+    let answer = n;
+    for(let i=1;i<n;i++)
+        if(n%i == 0) answer += i;
+    return answer;
+}
+```
 
 * 자연수 뒤집어 배열로 만들기
 + https://programmers.co.kr/learn/courses/30/lessons/12932?language=javascript
@@ -1006,6 +1086,16 @@ function solution(n) {
 }
 ```
 
+```javascript
+// 내소스, 2022-01-12
+function solution(n) {
+    return [...(""+n)].map(Number).reverse();
+}
+```
+
+
+
+
 
 * 정수 내림차순으로 배치하기
 + https://programmers.co.kr/learn/courses/30/lessons/12933?language=javascript
@@ -1019,7 +1109,12 @@ function solution(n) {
 }
 ```
 
-
+```javascript
+// 내소스, 2022-01-17
+function solution(n) {
+    return Number([...n.toString()].sort().reverse().join(""));
+}
+```
 
    
 ***
@@ -1038,6 +1133,17 @@ function solution(n) {
     return answer;
 }
 ```
+
+```javascript
+// 내소스, 2022-01-17
+function solution(n) {
+    var answer = 0;
+    answer = parseInt(Math.sqrt(n))
+    if(answer**2 == n) return (answer+1)**2;
+    return -1;
+}
+```
+
 
 ***
 ***
@@ -1062,6 +1168,17 @@ function solution(arr) {
     return answer;
 }
 ```
+
+```javascript
+// 내소스, 2022-01-17
+function solution(arr) {
+    if(arr.length<=1) return [-1];
+    arr.splice(arr.indexOf(Math.min(...arr)) ,1);
+    return arr;
+}
+```
+
+
 
 
 ```javascript
@@ -1095,8 +1212,7 @@ function solution(arr) {
 
 ```javascript
 function solution(num) {
-    var answer = num%2==0?"Even":"Odd";
-    return answer;
+    return num%2?"Odd":"Even";
 }
 ```
 
@@ -1210,6 +1326,19 @@ function solution(numbers, hand) {
 * 최대공약수와 최소공배수
 + https://programmers.co.kr/learn/courses/30/lessons/12940?language=javascript
 
+```javascript
+// 내소스 2022-01-23
+function solution(n, m) {
+    let x = gcd(n,m);
+    return [x, n*m/x];
+}
+
+function gcd(w,h) {
+    let mod = w%h;
+    if(mod==0) return h;
+    return gcd(h,mod);
+}
+```
 
 ```javascript
 // 내소스
@@ -1250,6 +1379,18 @@ function solution(num) {
 }
 ```
 
+```javascript
+// 내소스 2022-01-23
+function solution(num) {
+    if(num==1) return 0;
+    for(let i=1;i<=500;i++) {
+        num = num%2==0 ? num/2 : (num*3+1);
+        if(num == 1) return i;
+    }
+    return -1;
+}
+```
+
 
 ```javascript
 // 다른사람 소스
@@ -1276,6 +1417,12 @@ function solution(arr) {
 }
 ```
 
+```javascript
+// 내소스 2022-01-23
+function solution(arr) {
+    return arr.reduce( (a,d) => a+d,0) / arr.length;
+}
+```
 
 ```javascript
 // 다른사람소스
@@ -1296,6 +1443,20 @@ function solution(x) {
 ```
 
 
+```javascript
+// 내소스 2022-01-23
+function solution(x) {
+    if(x % digit_sum(x) == 0) return true;
+    return false;
+}
+
+function digit_sum(x) {
+    if(x<1) return x;
+    return x%10 + digit_sum(parseInt(x/10));
+}
+
+```
+
    
 ***
 ***
@@ -1313,6 +1474,14 @@ function solution(phone_number) {
     var answer = '';
     answer = "*".repeat(phone_number.length-4) +  phone_number.substring(phone_number.length-4);
     return answer;
+}
+```
+
+
+```javascript
+// 내소스, 2022-01-30
+function solution(phone_number) {
+    return "*".repeat(phone_number.length-4) + phone_number.substr(phone_number.length-4);
 }
 ```
 
@@ -1350,6 +1519,20 @@ function solution(arr1, arr2) {
 ```
 
 ```javascript
+// 내소스, 2022-01-30
+function solution(arr1, arr2) {
+    var answer = [[]];
+    arr1.forEach( (d,i) => {
+        answer[i] = [];
+        d.forEach( (d2,i2) => {            
+            answer[i][i2] = d2 + arr2[i][i2]; 
+        });  
+    });
+    return answer;
+}
+```
+
+```javascript
 // 다른사람 소스
 function solution(arr1, arr2) {
     return arr1.map((a,i) => a.map((b, j) => b + arr2[i][j]));
@@ -1370,6 +1553,17 @@ function solution(x, n) {
     return answer;
 }
 ```
+
+```javascript
+// 내소스 , 2022-01-30
+function solution(x, n) {
+    var answer = [];
+    for(let i=1;i<=n;i++)
+        answer.push(x*i);
+    return answer;
+}
+```
+
 
 ```javascript
 // 다른사람소스
@@ -1397,6 +1591,137 @@ process.stdin.on('data', data => {
         
 });
 ```
+
+```javascript
+// 내소스, 2022-01-30
+process.stdin.setEncoding('utf8');
+process.stdin.on('data', data => {
+    const n = data.split(" ");
+    const a = Number(n[0]), b = Number(n[1]);
+    
+    let str = "*".repeat(a) + "\n";
+    console.log(str.repeat(b));
+
+});
+```
+
+
+* 신고 결과 받기
++ https://programmers.co.kr/learn/courses/30/lessons/92334
+
+
+```javascript
+// 내소스
+function solution(id_list, report, k) {
+    var answer = [];
+    var ulist = [];
+    var rlist = [];
+    var block_list = [];
+    
+    
+    id_list.forEach( (d) => {
+        ulist[d] = new Set();
+        rlist[d] = new Set();
+        block_list[d] = 0;
+    });
+    
+    report.forEach( (d) => {
+        let [x,y] = d.split(" ");
+        ulist[x].add(y);
+        rlist[y].add(x);
+    });
+       
+    for (let d in rlist) {
+        if(rlist[d].size >= k)
+            block_list[d] = 1;
+    }    
+    
+    id_list.forEach( (d) => {
+        let cnt = 0;
+        ulist[d].forEach( (d) => {
+            if(block_list[d]>0) cnt++;
+        });
+        answer.push(cnt);
+    });
+    
+    return answer;
+}
+```
+
+
+
+```javascript
+// 내소스 (개선됨)
+function solution(id_list, report, k) {
+    var answer = Array.from({length:id_list.length},() =>0);
+    var block_list = Array.from({length:id_list.length},() =>0);
+    
+    var report2 = new Set();
+    report.forEach( (d) => report2.add(d) );
+    
+    var id_list4 = [];
+    id_list.forEach( (d,i) => {
+        id_list4[d] = i;
+    });
+    
+    let x,y;
+    report2.forEach( (d) => {
+        [x,y] = d.split(" ");
+        block_list[id_list4[y]]++;
+    });
+    
+    report2.forEach( (d) => {
+        [x,y] = d.split(" ");
+        if(block_list[id_list4[y]] >= k) 
+            answer[id_list4[x]]++;
+    });
+  
+    return answer;
+}
+```
+
+
+
+```javascript
+// 내소스 (개선됨2)
+function solution(id_list, report, k) {
+    var answer = Array.from({length:id_list.length},() =>0);
+    var block_list = Array.from({length:id_list.length},() =>0);
+    let x,y;
+    
+    var report_dup = [];    
+    var id_list2 = [];
+    id_list.forEach( (d,i) => {
+        id_list2[d] = i;
+        report_dup[i] = new Set();
+    });
+    
+    // 각각의 신고한 유저목록
+    var report2 = new Set();
+    report.forEach( (d) => {
+        report2.add(d);
+        [x,y] = d.split(" ");
+        report_dup[id_list2[x]].add(id_list2[y]);
+    });
+    
+    report_dup.forEach( (d) => {
+        d.forEach( (d2) => {
+           block_list[d2]++; 
+        });    
+    });
+    
+    report_dup.forEach( (d,i) => {
+        d.forEach( (d2) => {
+            if(block_list[d2]>=k) answer[i]++;
+        });
+    });
+    
+    return answer;
+}
+```
+
+
+
 
 
 
@@ -2052,5 +2377,17 @@ function solution(n) {
 function solution(n) {
     for(let i=2;i<=n;i++) 
         if((n-1)%i == 0) return i;
+}
+```
+
+
+
+* 서울에서 김서방 찾기
++ https://programmers.co.kr/learn/courses/30/lessons/12919
+
+```javascript
+// 2021-12-27
+function solution(seoul) {
+    return `김서방은 ${seoul.indexOf("Kim")}에 있다`;
 }
 ```

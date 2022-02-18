@@ -841,10 +841,532 @@ class Solution {
 
 
 
+* 문자열 다루기 기본
++ https://programmers.co.kr/learn/courses/30/lessons/12918?language=java
+
++ 내소스
+```java
+class Solution {
+    public boolean solution(String s) {
+        if(s.length() != 4 && s.length() != 6) return false;
+        for(int i=0;i<s.length();i++) {
+            if(s.charAt(i) <'0' || s.charAt(i) >'9') return false;
+        }
+        return true;
+    }
+}
+```
+
+
+
+* 서울에서 김서방 찾기
++ https://programmers.co.kr/learn/courses/30/lessons/12919?language=java
+
++ 내소스
+```java
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+class Solution {
+    public String solution(String[] seoul) {
+        List<String> alist = Arrays.asList(seoul);
+        return String.format("김서방은 %d에 있다",alist.indexOf("Kim"));
+    }
+}
+```
 
 
 
 
+* 소수 찾기
++ https://programmers.co.kr/learn/courses/30/lessons/12921?language=java
+
++ 내소스
+```java
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+class Solution {
+    public int solution(int n) {
+        int[] arr = new int[n+1];
+        for(int i=2;i<=n;i++) {
+            if(arr[i] == 2) continue;
+            arr[i] = 1;
+            for(int j=i*2;j<=n;j+=i) arr[j] = 2;
+        }
+        int sum = Arrays.stream(arr).reduce( 0,(x,y) -> {
+            return x + (y==1?1:0);
+        } );
+        return sum;
+    }
+}
+```
+
+
+
+
+* 수박수박수박수박수박수?
++ https://programmers.co.kr/learn/courses/30/lessons/12922
+
+```java
+// 내소스
+class Solution {
+    public String solution(int n) {
+        StringBuffer str = new StringBuffer(n);
+        for(int i=0;i<n;i++) 
+            str.append(i%2==0 ? "수" : "박");
+        return str.toString();
+    }
+}
+```
+
+
+
+
+
+
+
+* 문자열을 정수로 바꾸기
++ https://programmers.co.kr/learn/courses/30/lessons/12925?language=java
+
+```java
+// 내소스
+class Solution {
+    public int solution(String s) {
+        return Integer.parseInt(s);
+    }
+}
+```
+
+
+
+
+* 시저 암호
++ https://programmers.co.kr/learn/courses/30/lessons/12926?language=java
+
+```java
+// 내소스
+class Solution {
+    public String solution(String s, int n) {
+        int base = 65;
+        StringBuffer str = new StringBuffer(n);
+        for(int i=0;i<s.length();i++) {
+            int x = (int)s.charAt(i);
+            if(x == 32) {
+                str.append(' ');
+            }
+            else {
+                base = x<=90?65:97;
+                str.append(Character.toString(base + (x+n-base)%26));
+            }
+        }
+        return str.toString();
+    }
+}
+```
+
+
+
+* 정수 내림차순으로 배치하기
++ https://programmers.co.kr/learn/courses/30/lessons/12933?language=java
+
+```java
+// 내소스
+import java.util.Arrays;
+
+class Solution {
+    public long solution(long n) {
+        long answer = 0;        
+        StringBuffer str = new StringBuffer();
+        String str2 = String.valueOf(n);
+        char[] arr = str2.toCharArray();
+        Arrays.sort(arr);
+        for(int i=arr.length-1;i>=0;i--) 
+        	str.append(arr[i]);    
+        return Long.parseLong(str.toString());
+    }
+}
+
+```
+
+
+* 정수 제곱근 판별
++ https://programmers.co.kr/learn/courses/30/lessons/12934?language=java
+
+```java
+// 내소스
+class Solution {
+    public long solution(long n) {
+        long answer = (long)Math.sqrt((double)n);
+        if(Math.pow((double)answer, 2) == n) return (long)Math.pow((double)(answer+1), 2);
+        return -1;
+    }
+}
+
+```
+
+
+* 제일 작은 수 제거하기
++ https://programmers.co.kr/learn/courses/30/lessons/12935?language=java
+
+```java
+// 내소스
+import java.util.ArrayList;
+import java.util.List;
+
+class Solution {
+    public int[] solution(int[] arr) {        
+        int[] answer = {-1};
+    	if(arr.length <= 1) return answer;
+
+        answer = new int[arr.length-1];
+    	int min = arr[0];
+    	for(int d:arr) if(min>d) min = d;
+        for(int i=0,j=0;i<arr.length;i++,j++) {            
+            if(min==arr[i]) { j--; continue; }
+            answer[j] = arr[i];
+        }
+        return answer;
+    }
+}
+```
+
+* 짝수와 홀수
++ https://programmers.co.kr/learn/courses/30/lessons/12937?language=java
+
+```java
+// 내소스
+class Solution {
+    public String solution(int num) {
+        return num % 2 == 0 ? "Even" : "Odd";
+    }
+}
+```
+
+
+
+
+* 최대공약수와 최소공배수
++ https://programmers.co.kr/learn/courses/30/lessons/12940?language=java
+
+```java
+// 내소스
+public class Solution  {
+    public int[] solution(int n, int m) {
+        int[] answer = { 0,0 };
+        answer[1] = n*m;
+        
+        int mod=0;
+        while(true) {
+            mod = n%m;
+            if(mod==0) {
+                answer[0] = m;
+                break;   
+            }
+            n = m;
+            m = mod;
+        }
+        answer[1] /= answer[0];
+        return answer;
+    }
+}
+```
+
+
+
+* 콜라츠 추측
++ https://programmers.co.kr/learn/courses/30/lessons/12943?language=java
+
+```java
+// 내소스
+class Solution {
+    public int solution(int num) {
+        if(num==1) return 0;
+        long x = num;
+        for(int i=1;i<=500;i++) {
+            x = x%2==0 ? x/2 : (x*3+1);
+            if(x==1) return i;
+        }
+        return -1;
+    }
+}
+```
+
+
+
+* 평균 구하기
++ https://programmers.co.kr/learn/courses/30/lessons/12944?language=java
+
+```java
+// 내소스
+import java.util.Arrays;
+
+class Solution {
+    public double solution(int[] arr) {
+        return (double)Arrays.stream(arr).sum() / arr.length;
+    }
+}
+```
+
+
+
+* 하샤드 수
++ https://programmers.co.kr/learn/courses/30/lessons/12947?language=java
+
+```java
+// 내소스
+class Solution {
+    public int digit_sum(int x) {
+        if(x<1) return x;
+        return x%10 + digit_sum(x/10);
+    }
+    
+    public boolean solution(int x) {
+        if(x%digit_sum(x) == 0) return true;
+        return false;
+    }
+}
+```
+
+
+
+
+
+
+* 핸드폰 번호 가리기
++ https://programmers.co.kr/learn/courses/30/lessons/12948?language=java
+
+```java
+// 내소스
+class Solution {
+    public String solution(String phone_number) {
+        return "*".repeat(phone_number.length()-4) + phone_number.substring(phone_number.length()-4);
+    }
+}
+```
+
+
+
+
+* 행렬의 덧셈
++ https://programmers.co.kr/learn/courses/30/lessons/12950
+
+```java
+// 내소스
+import java.util.Arrays;
+
+class Solution {
+    public int[][] solution(int[][] arr1, int[][] arr2) {
+        int[][] answer = Arrays.copyOf(arr1, arr1.length);
+        for(int i=0;i<answer.length;i++) {
+        	for(int j=0;j<answer[i].length;j++)
+        		answer[i][j] += arr2[i][j];
+        }
+        return answer;
+    }
+}
+```
+
+
+
+
+* x만큼 간격이 있는 n개의 숫자
++ https://programmers.co.kr/learn/courses/30/lessons/12954
+
+```java
+// 내소스
+class Solution {
+    public long[] solution(int x, int n) {
+        long[] answer = new long[n];
+        for(int i=1;i<=n;i++)
+            answer[i-1] = (long)x*(long)i;
+        return answer;
+    }
+}
+```
+
+
+
+
+* 직사각형 별찍기
++ https://programmers.co.kr/learn/courses/30/lessons/12969
+
+```java
+// 내소스
+import java.util.Scanner;
+
+class Solution {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int a = sc.nextInt();
+        int b = sc.nextInt();
+
+        String str = "*".repeat(a) + "\n";
+        System.out.println(str.repeat(b));
+    }
+}
+```
+
+
+
+
+* 신고 결과 받기
++ https://programmers.co.kr/learn/courses/30/lessons/92334
+
+```java
+// 내소스
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
+class Solution {
+    public int[] solution(String[] id_list, String[] report, int k) {
+        int[] answer = new int[id_list.length];
+        int[] block_list = new int[id_list.length];
+        int[] ucnt = new int[id_list.length];
+        int[] idx_list = new int[id_list.length];
+        
+        // report의 중복값 제거
+        Set<String> report2 = new HashSet<>();
+        for(String d:report) {
+        	report2.add(d);
+        }
+        
+        // 빠른 검색을 위하여 id_list정렬
+        String[] id_list2 = Arrays.copyOf(id_list, id_list.length);
+        Arrays.sort(id_list2);
+        
+        // 정렬된 유저와 정렬안된 유저를 매칭하기 위한 인덱스List
+        for(int i=0;i<id_list.length;i++) {
+        	String d = id_list[i];
+        	idx_list[i] = Arrays.binarySearch(id_list2, d);
+        }
+        
+        // 신고당한 유저카운트 (각각의 유저가 몇번 신고당했는지카운트값 저장) 
+        for(String d:report2) {
+        	String[] tmp = d.split(" ");
+        	int index2 = Arrays.binarySearch(id_list2, tmp[1]);
+        	ucnt[index2]++;
+        }
+        
+        // 신고한 유저들의 각각의 블럭당한 유저 카운트
+        for(String d:report2) {
+        	String[] tmp = d.split(" ");
+        	int index = Arrays.binarySearch(id_list2, tmp[0]);
+        	int index2 = Arrays.binarySearch(id_list2, tmp[1]);
+        	if(ucnt[index2]>=k) block_list[index]++;
+        }
+               
+        for(int i=0;i<id_list.length;i++) {
+        	answer[i] = block_list[idx_list[i]];
+        }               
+        
+        return answer;
+    }
+}
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   
+***
+***
+   
+* Level 2
+
+   
+***
+***
+   
+
+
+
+
+* n^2 배열 자르기
++ https://programmers.co.kr/learn/courses/30/lessons/87390?language=java
+
+```java
+// 내소스
+class Solution {
+    public int[] solution(int n, long left, long right) {
+        int[] answer = new int[(int)right-(int)left+1];
+
+        long idx = 0;
+        int i = 0;
+        for(long x=1;x<=n;x++) {
+            if(idx>right) break;
+            if(idx+n < left) {
+                idx += n;
+                continue;
+            }
+            for(long y=1;y<=n;y++) {
+                long d = y<=x?x:y;            
+                if(idx>=left && idx<=right) answer[i++] = (int)d;
+                idx++;
+            }
+        }
+
+        return answer;
+    }
+}
+```
+
+
+
+
+* 멀쩡한 사각형
++ https://programmers.co.kr/learn/courses/30/lessons/62048?language=java
+
+```java
+// 내소스
+class Solution {
+    public int gcd(int w,int h) {
+        int mod = w%h;
+        if(mod==0) return h;
+        return gcd(h,mod);
+    }
+    
+    public long solution(int w, int h) {
+        return (long)w*h - (w+h-gcd(w,h));
+    }
+}
+```
+
+
+
+
+
+
+* 124 나라의 숫자
++ https://programmers.co.kr/learn/courses/30/lessons/12899?language=java
+
+```java
+// 내소스
+class Solution {
+    public String solution(int n) {
+        StringBuffer answer = new StringBuffer();
+        while(n>0) {
+            int mod = n%3;
+            answer.append((mod==0?4:mod));
+            n = n/3 - (mod==0?1:0);
+        }
+        return answer.reverse().toString();
+    }
+}
+```
 
 
 

@@ -1,0 +1,39 @@
+
+
+* 문자열 다루기 기본
++ https://programmers.co.kr/learn/courses/30/lessons/12918
+
++ 내소스
+```Python
+def solution(s):
+    if(len(s) != 4 and len(s) != 6):
+        return False;    
+    return s.isdigit();
+```
+
+
+
+* 서울에서 김서방 찾기
++ https://programmers.co.kr/learn/courses/30/lessons/12919
+
++ 내소스
+```Python
+def solution(seoul):
+    return "김서방은 {}에 있다".format(seoul.index('Kim'))
+```
+
+
+
+
+* 소수 찾기
++ https://programmers.co.kr/learn/courses/30/lessons/12921
+
++ 내소스
+```Python
+def solution(n):
+    num = set(range(2,n+1))
+    for i in range(2,n+1):
+        if i in num:
+            num -= set(range(2*i,n+1,i))
+    return len(num)
+```

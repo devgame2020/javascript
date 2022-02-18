@@ -111,6 +111,23 @@ function solution(n) {
     return answer;
 }
 ```
+
+
+```javascript
+// 내소스(해결못함), 2022-02-17
+class Solution {
+    public String solution(int n) {
+        StringBuffer answer = new StringBuffer();
+        while(n>0) {
+            int mod = n%3;
+            answer.append((mod==0?4:mod));
+            n = n/3 - (mod==0?1:0);
+        }
+        return answer.reverse().toString();
+    }
+}
+```
+
    
 ***
 ***
@@ -739,6 +756,39 @@ function solution(record) {
 ```
 
 
+```javascript
+// 내소스, 2022-02-06
+function solution(record) {
+    const ENTER = 1;
+    const LEAVE = 2;
+    const ENTER_STR = "님이 들어왔습니다.";
+    const LEAVE_STR = "님이 나갔습니다.";
+    
+    var answer = [];
+    var ulist = [];
+    var chat = [];
+    let cmd,uid,name;
+    record.forEach( (d) => {
+        [cmd,uid,name] = d.split(" ");
+        if(cmd.localeCompare("Enter") == 0) {
+            ulist[uid] = name;
+            chat.push([uid,ENTER]);
+        } 
+        else if(cmd.localeCompare("Leave") == 0) {
+            chat.push([uid,LEAVE]);
+        }
+        else {
+            ulist[uid] = name;
+        }
+    });
+    
+    chat.forEach( (d) => {
+        answer.push(ulist[d[0]] + (d[1]==ENTER?ENTER_STR:LEAVE_STR));
+    });
+    
+    return answer;
+}
+```
 
 
 * 타겟 넘버
@@ -849,6 +899,7 @@ function solution(w, h) {
 ```
 
 
+
 * 문자열 압축
 + https://programmers.co.kr/learn/courses/30/lessons/60057?language=javascript
 
@@ -895,6 +946,42 @@ function solution(s) {
     return answer;
 }
 ```
+
+
+```javascript
+// 2022-02-06
+function solution(s) {
+    var answer = s.length;
+    let mid = parseInt(s.length/2);
+    for(let i=1;i<=mid;i++) {
+        let dup = 1;
+        let one = "";
+        let cnt = 0;
+        for(let j=0;j<s.length;j++) {
+            let two = s.substr(i*j,i);
+            if(two.length < i) break;
+            if(one.localeCompare(two) == 0) {
+                dup++;
+            }
+            else {
+                if(dup>1) {
+                    cnt = cnt + (i*dup - (dup+one).length);
+                }
+                one = two;
+                dup=1;
+            }
+        }
+        
+        if(dup>1) {
+            cnt = cnt + (i*dup - (dup+one).length);
+        }        
+        answer = Math.min(answer,s.length-cnt);
+    }
+
+    return answer;
+}
+```
+
 
 
 * 괄호 변환
@@ -1846,7 +1933,7 @@ const solution = (lines) => {
 * 행렬 테두리 회전하기
 + https://programmers.co.kr/learn/courses/30/lessons/77485
 
-
+ 
 ```javascript
 // 내소스 2021.12.24
 function solution(rows, columns, queries) {
@@ -1908,12 +1995,55 @@ function solution(rows, columns, queries) {
 * 
 + 
 
-
+* n^2 배열 자르기
++ https://programmers.co.kr/learn/courses/30/lessons/87390?language=javascript
 ```javascript
 // 내소스
-
+function solution(n, left, right) {
+    var answer = [];
+    var arr = [];
+    var idx = 0;
+    for(let x=1;x<=n;x++) {
+        if(idx>right) break;
+        if(idx+n < left) {
+            idx += n;
+            continue;
+        }
+        for(let y=1;y<=n;y++) {
+            let d = y<=x?x:y;            
+            if(idx>=left && idx<=right) answer.push(d);
+            idx++;
+        }
+    }
+    return answer;
+}
 ```
 
+```javascript
+// 내소스(개선됨)
+function solution(n, left, right) {
+    var answer = [];
+    var arr = [];
+    var idx = 0;
+    let x = parseInt(left/n)+1;
+    idx = n * (x-1);
+    
+    for(;x<=n;x++) {
+        if(idx>right) break;
+        if(idx+n < left) {
+            idx += n;
+            continue;
+        }
+
+        for(let y=1;y<=n;y++) {
+            let d = y<=x?x:y;            
+            if(idx>=left && idx<=right) answer.push(d);
+            idx++;
+        }
+    }
+    return answer;
+}
+```
 
 * 
 + 
