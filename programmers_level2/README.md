@@ -20,6 +20,32 @@ function solution(progresses, speeds) {
 }
 ```
 
+```javascript
+// 내소스, 2022-02-21
+function solution(progresses, speeds) {
+    var answer = [];
+    var fin = [];
+    progresses.forEach( (d,i) => {
+        fin.push(Math.ceil((100-d)/speeds[i]));
+    });
+
+    var build_time = 0;
+    var cnt = 0;
+    fin.forEach( (d,i) => {
+        if(build_time >= d) cnt++;
+        else {
+            if(cnt>0) answer.push(cnt);
+            cnt = 1;
+            build_time = d;
+        }
+    });    
+    if(cnt>0) answer.push(cnt);
+    
+    return answer;
+}
+```
+
+
 
 * 다리를 지나는 트럭
 + https://programmers.co.kr/learn/courses/30/lessons/42583
@@ -817,6 +843,26 @@ function solution(numbers, target) {
     
     rcall(0);
     
+    return answer;
+}
+```
+
+```javascript
+// 내소스, 2022-02-21
+function solution(numbers, target) {
+    var answer = 0;
+    
+    function recursive(idx) {
+        if(idx >= numbers.length) {
+            if( target == numbers.reduce((a,d) => a+d)) answer++;
+            return;
+        }
+        recursive(idx+1);
+        numbers[idx] *= -1;
+        recursive(idx+1);        
+    }
+    
+    recursive(0);    
     return answer;
 }
 ```

@@ -1371,5 +1371,68 @@ class Solution {
 
 
 
+* 기능개발
++ https://programmers.co.kr/learn/courses/30/lessons/42586?language=java
+
+```java
+// 내소스
+import java.util.ArrayList;
+import java.util.List;
+
+class Solution {
+    public int[] solution(int[] progresses, int[] speeds) {
+        List<Integer> list = new ArrayList<Integer>();
+
+        int d = (int)Math.ceil((100.0-progresses[0])/speeds[0]);
+        int fin=1;
+        for(int i=1;i<progresses.length;i++) {
+            int ptime = (int)Math.ceil((100.0-progresses[i])/speeds[i]);
+            if(d>=ptime) fin++;
+            else {
+                list.add(fin);
+                fin=1;
+                d = ptime;
+            }
+        }
+        list.add(fin);
+        
+        return list.stream().mapToInt(Integer::intValue).toArray();
+    }
+}
+```
+
+
+
+* 타겟 넘버
++ https://programmers.co.kr/learn/courses/30/lessons/43165
+
+```java
+// 내소스
+import java.util.Arrays;
+
+class Solution {
+	public static int recursive(int[] numbers,int target,int idx) {
+        if(idx >= numbers.length) {
+        	if(Arrays.stream(numbers).sum() == target) return 1;
+            return 0;
+        }
+        
+        int sum = 0;
+        sum += recursive(numbers,target,idx+1);
+        numbers[idx] *= -1;
+        sum += recursive(numbers,target,idx+1);  
+        return sum;
+	}
+    public int solution(int[] numbers, int target) {
+        return recursive(numbers,target,0);
+    }
+}
+```
+
+
+
+
+
+
 
 
