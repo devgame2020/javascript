@@ -1076,6 +1076,67 @@ function solution(p) {
 }
 ```
 
+```javascript
+// 내소스, 2022-03-05 ?
+function solution(p) {
+    var answer = '';
+    
+    // true : 올바른 괄호문자열
+    function perfect(p) {
+        if(p.length==0) return true;
+        let arr = [...p];
+        let st = [];
+        for(let i=0;i<arr.length;i++) {
+            if(arr[i] == ")") {
+                if(st.length == 0) return false;
+                st.pop();
+            }
+            else 
+                st.push(arr[i]);
+        }
+        return st.length == 0?true:false;
+    }
+    
+    // u,v로 분리한다.
+    function divide_uv(p) {
+        let arr = [...p];
+        let left=0,right=0;
+        for(let i=0;i<arr.length;i++) {
+            if(arr[i] =="(") left++;
+            else right++;
+            if(left == right) {
+                return [ p.substr(0,i+1),p.substr(i+1) ];
+            }
+        }
+        return [p,""];
+    }
+    
+    // () 을 서로 뒤집기
+    function changestr(str) {
+        let tmp = str.substr(1,str.length-2);          
+        return [...tmp].map( (d) => d=="("?")":"(" ).join(""); 
+    }
+    
+    // u,v로 나눠서
+    // u는 올바른괄호문자열이면  u + rec(v)
+    //     아니라면 "(" + rec(v) + ")" + u뒤집기 
+    function rec(x) {
+        if(x.length<1 || perfect(x)) return x;
+        
+        let u,v;
+        [u,v] = divide_uv(x);
+
+        if(perfect(u)) {
+            return u + rec(v);          
+        }
+        return "(" + rec(v) + ")" + changestr(u);
+    }  
+    answer = rec(p);
+    
+    return answer;
+}
+```
+
 
 ```javascript
 // 다른사람소스
@@ -1229,6 +1290,28 @@ function solution(s)
 }
 ```
 
+```javascript
+// 내소스, 2022-02-27
+function solution(s)
+{
+    function checkLast(arr,d) {
+        if(arr.length == 0) return false;
+        if(arr[arr.length-1].localeCompare(d) == 0) return true;
+        return false;
+    }
+    
+    var arr = [];    
+    [...s].forEach( (d) => {
+        if(checkLast(arr,d)) 
+            arr.pop();
+        else 
+            arr.push(d);    
+    });
+    
+    if(arr.length == 0) return 1;
+    return 0;
+}
+```
 
 
    
@@ -2038,6 +2121,58 @@ function solution(rows, columns, queries) {
 
 
 
+```javascript
+// 내소스 2022.02.27
+function solution(rows, columns, queries) {
+    var answer = [];
+    
+    // array생성 
+    arr = [];
+    idx = 1;
+    for(i=1;i<=rows;i++) {
+        arr[i] = [];
+        for(j=1;j<=columns;j++) arr[i][j] = idx++;
+    }
+    
+    queries.forEach( (d) => {
+        row1 = d[0];
+        col1 = d[1];
+        row2 = d[2];
+        col2 = d[3];
+        
+        // left
+        arr2 = [];
+        for(i=col1;i<=col2;i++) 
+            arr2.push(arr[row1][i]);
+        // down
+        for(i=row1+1;i<=row2-1;i++) 
+            arr2.push(arr[i][col2]);
+        // right
+        for(i=col2;i>=col1;i--)
+            arr2.push(arr[row2][i]);        
+        // up
+        for(i=row2-1;i>=row1+1;i--) 
+            arr2.push(arr[i][col1]);
+        
+        answer.push(Math.min(...arr2));
+
+        for(i=row1;i<=row2;i++) 
+            arr[i][col1] = arr2.pop();
+        for(i=col1+1;i<=col2-1;i++)
+            arr[row2][i] = arr2.pop();
+        for(i=row2;i>=row1;i--) 
+            arr[i][col2] = arr2.pop();        
+        for(i=col2-1;i>=col1+1;i--) 
+            arr[row1][i] = arr2.pop();
+    });
+
+    
+    return answer;
+}
+```
+
+
+
 * 
 + 
 
@@ -2091,14 +2226,127 @@ function solution(n, left, right) {
 }
 ```
 
-* 
-+ 
+* https://programmers.co.kr/learn/courses/30/lessons/92342?language=javascript
++ 양궁대회
 
 
 ```javascript
 // 내소스
+function solution(n, info) {
+    var answer = [];
+    
+    var winscore = 0;
+    var lowidx=0;
+    
+    var arr = [];
+    // 모든경우의 수를 구한다. 
+    // 각 배열의 경우의 수는 2가지뿐 (0이거나 상대방보다 1많거나..)
+    // 남은화살, 점수, 어피치점수, Index 
+    function rec(free, jumsu, apeach, idx) {
+        if(idx == info.length) {
+            total = jumsu-apeach;      
+      
+            arridx = 0;
+            if(winscore == total) {
+                arr.forEach( (d,i) => {
+                    if(d>0) arridx = i;
+                });
+                if(lowidx > arridx) return;
+            }
+            
+            if(winscore <= total) {
+                winscore = total;
+                lowidx = arridx;
+                answer = [...arr];
+            }            
+            return;
+        }
 
+        arr[idx] = 0;
+        apeach_jumsu = 0;
+        if(info[idx]>0) apeach_jumsu = (10-idx);
+        rec(free,jumsu,apeach + apeach_jumsu,idx+1);        
+        
+        arrow = info[idx]+1;                     
+        if(free >= arrow || idx==10) {
+            if(idx==10) arrow = free;
+            jumsu2 = jumsu + (10-idx);
+            arr[idx] = arrow;
+            rec(free-arrow, jumsu2,apeach, idx+1);            
+        } 
+        
+    }
+    rec(n,0,0,0);
+    
+    if(winscore<=0) return [-1];
+    return answer;
+}
 ```
+
+
+
+* https://programmers.co.kr/learn/courses/30/lessons/72411
++ 메뉴 리뉴얼
+
+
+```javascript
+// 내소스
+// menu : arr를 sz사이즈만큼 잘라서 저장된다.
+function rec(menu, arr,idx=0,result="",sz=2) {
+    if(result.length==sz) { 
+        result = [...result].sort().join("");
+        if(menu[result]) 
+            menu[result]++;
+        else
+            menu[result] = 1;
+        return; 
+    }
+    if(idx>=arr.length) { return; }
+    
+    rec(menu,arr,idx+1,result,sz);
+    rec(menu,arr,idx+1,result+arr[idx],sz);
+}
+
+
+function solution(orders, course) {
+    var answer = [];    
+    
+    course.forEach( (cnt) => {
+        let menufin = [];
+        let menu = [];
+        // 모든 경우의 수를 구한다.
+        orders.forEach( (d) => {            
+            rec(menu,[...d],0,"",cnt );
+
+        });
+
+        let mx = 2;
+        for(let k in menu) {
+            if(menu[k] == mx) {     // 코스요리추가
+                menufin.push(k);
+            }
+            else if(menu[k]>mx) {   // 기존의 값을 버리고, 새로 추가
+                mx = menu[k];
+                menufin = [ k ]
+            }
+        } 
+                
+        answer = answer.concat(menufin);
+    });
+    
+    return answer.sort();
+}
+```
+
+
+
+
+
+
+
+
+
+
 
 
 * 

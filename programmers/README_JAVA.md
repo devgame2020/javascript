@@ -1434,5 +1434,210 @@ class Solution {
 
 
 
+* 짝지어 제거하기
++ https://programmers.co.kr/learn/courses/30/lessons/12973
+
+```java
+// 내소스
+import java.util.Stack;
+
+class Solution
+{
+    public int solution(String s)
+    {
+        Stack<String> stack = new Stack<>();        
+        for(int i=0;i<s.length();i++) {
+        	String tmp = String.valueOf(s.charAt(i));
+        	if(stack.size()>0 && stack.peek().compareTo(tmp) == 0) {
+        		stack.pop();
+        	}
+        	else {
+        		stack.push(tmp);
+        	}
+        }
+        
+        return stack.size()>0?0:1;
+    }
+}
+```
+
+
+
+
+
+* 행렬 테두리 회전하기
++ https://programmers.co.kr/learn/courses/30/lessons/77485
+
+```java
+// 내소스
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Stack;
+
+class Solution {
+    public int[] solution(int rows, int columns, int[][] queries) {
+        List<Integer> list = new ArrayList<Integer>();
+    	
+    	int[][] arr = new int[rows+1][columns+1];
+    	for(int i=1;i<=rows;i++) 
+    		for(int j=1;j<=columns;j++)
+    			arr[i][j] = (i-1)*columns + j;
+
+    	for(int x=0;x<queries.length;x++) {
+    		int row1 = queries[x][0];
+    		int col1 = queries[x][1];
+    		int row2 = queries[x][2];
+    		int col2 = queries[x][3];          
+            Stack<Integer> stack = new Stack<>();
+    		
+    		for(int i=col1;i<=col2;i++)
+    			stack.push(arr[row1][i]);
+    		for(int i=row1+1;i<=row2-1;i++)
+    			stack.push(arr[i][col2]);
+    		for(int i=col2;i>=col1;i--)
+    			stack.push(arr[row2][i]);
+    		for(int i=row2-1;i>=row1+1;i--)
+    			stack.push(arr[i][col1]);
+    		
+    		list.add(Collections.min(stack));
+    		            
+    		for(int i=row1;i<=row2;i++) 
+    			arr[i][col1] = stack.pop();
+    		for(int i=col1+1;i<=col2-1;i++)
+    			arr[row2][i] = stack.pop();
+    		for(int i=row2;i>=row1;i--)
+       			arr[i][col2] = stack.pop();
+    		for(int i=col2-1;i>=col1+1;i--)
+    			arr[row1][i] = stack.pop();
+        }
+    	
+    	return list.stream().mapToInt(Integer::intValue).toArray();    
+    }
+}
+```
+
+
+
+* 메뉴 리뉴얼
++ https://programmers.co.kr/learn/courses/30/lessons/72411
+
+```java
+// 내소스
+// menu : arr를 sz사이즈만큼 잘라서 저장된다.
+function rec(menu, arr,idx=0,result="",sz=2) {
+    if(result.length==sz) { 
+        result = [...result].sort().join("");
+        if(menu[result]) 
+            menu[result]++;
+        else
+            menu[result] = 1;
+        return; 
+    }
+    if(idx>=arr.length) { return; }
+    
+    rec(menu,arr,idx+1,result,sz);
+    rec(menu,arr,idx+1,result+arr[idx],sz);
+}
+
+
+function solution(orders, course) {
+    var answer = [];    
+    
+    course.forEach( (cnt) => {
+        let menufin = [];
+        let menu = [];
+        // 모든 경우의 수를 구한다.
+        orders.forEach( (d) => {            
+            rec(menu,[...d],0,"",cnt );
+
+        });
+
+        let mx = 2;
+        for(let k in menu) {
+            if(menu[k] == mx) {     // 코스요리추가
+                menufin.push(k);
+            }
+            else if(menu[k]>mx) {   // 기존의 값을 버리고, 새로 추가
+                mx = menu[k];
+                menufin = [ k ]
+            }
+        } 
+                
+        answer = answer.concat(menufin);
+    });
+    
+    return answer.sort();
+}
+```
+
+
+
+* 괄호 변환
++ https://programmers.co.kr/learn/courses/30/lessons/60058
+
+```java
+// 내소스
+function solution(p) {
+    var answer = '';
+    
+    // true : 올바른 괄호문자열
+    function perfect(p) {
+        if(p.length==0) return true;
+        let arr = [...p];
+        let st = [];
+        for(let i=0;i<arr.length;i++) {
+            if(arr[i] == ")") {
+                if(st.length == 0) return false;
+                st.pop();
+            }
+            else 
+                st.push(arr[i]);
+        }
+        return st.length == 0?true:false;
+    }
+    
+    // u,v로 분리한다.
+    function divide_uv(p) {
+        let arr = [...p];
+        let left=0,right=0;
+        for(let i=0;i<arr.length;i++) {
+            if(arr[i] =="(") left++;
+            else right++;
+            if(left == right) {
+                return [ p.substr(0,i+1),p.substr(i+1) ];
+            }
+        }
+        return [p,""];
+    }
+    
+    // () 을 서로 뒤집기
+    function changestr(str) {
+        let tmp = str.substr(1,str.length-2);          
+        return [...tmp].map( (d) => d=="("?")":"(" ).join(""); 
+    }
+    
+    // u,v로 나눠서
+    // u는 올바른괄호문자열이면  u + rec(v)
+    //     아니라면 "(" + rec(v) + ")" + u뒤집기 
+    function rec(x) {
+        if(x.length<1 || perfect(x)) return x;
+        
+        let u,v;
+        [u,v] = divide_uv(x);
+
+        if(perfect(u)) {
+            return u + rec(v);          
+        }
+        return "(" + rec(v) + ")" + changestr(u);
+    }  
+    answer = rec(p);
+    
+    return answer;
+}
+```
+
+
+
 
 
